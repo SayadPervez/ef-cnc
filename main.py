@@ -2,6 +2,6 @@ from functions import *
 from shapes import Square
 import constants as cont
 
-sq = Square(5)
+sq = Square(1500)
 sq.print()
 sq.displayShape()
