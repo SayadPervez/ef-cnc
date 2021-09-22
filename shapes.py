@@ -20,6 +20,8 @@ class Square:
         '''
         print(repr(self))
 
+
+
     def displayShape(self):
         '''
         Prints shape to console in binary 
@@ -39,4 +41,5 @@ class Square:
         '''
         siu = side*const.sampl # sim => side in micrometers (u kind of looks like Mu)
         self.shapeMatrix = [[1 for _ in range(siu)] for _ in range(siu)]
-        self.shapeFrameDimension = [siu,siu]
+        self.shapeFrameDimension = [siu,siu]        # shapeFrameDimension changes on tilting
+        self.dimensions=[self.length,self.tilt,'mm,°']     # only tilt of dimension changes on tilting
