@@ -28,4 +28,36 @@ def arr2png(arr):
     img=im.fromarray(ar,'RGB')
     img.save('./IMG/img.png')
     return(img)
+def png2arr(img):
+    ar=np.array(img,dtype='int64')
+    print(np.shape(ar))
+    l,b,h=np.shape(ar)
+    a=np.zeros((l,b),dtype=str)
+    ar_avg=np.zeros((l,b),dtype='int64')
+    ar0=ar[:,:,0]
+    ar1=ar[:,:,1]
+    ar2=ar[:,:,2]
+    ar_avg=(ar0+ar1+ar2)//3
+    
+    #red
+    a[ar0==255 ]='r'
+    #blue
+    a[ar2==255]='b'
+    #green
+    a[ar1==255]='g'
+    #white
+    a[ar_avg==255]=0
+    #black
+    a[ar_avg==0]=1
+    #magenta
+    a[ar_avg==170]='m'
+    a=a.tolist()
+    for i,x in enumerate(a):
+        for j,e in enumerate(x):
+            if e=='0':
+                a[i][j]=0
+            if e=='1':
+                a[i][j]=1
+
+    return a
 
