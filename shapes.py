@@ -1,6 +1,7 @@
 from functions import *
 import constants as const
 from math import sin,cos,radians
+from visualization import arr2png
 
 class Square:
     '''
@@ -26,17 +27,17 @@ class Square:
         Tilts the shape
         '''
         angle = radians(angle)
-        sinFactor = (sin(angle)*self.length)
-        cosFactor=(cos(angle)*self.length)
-        dy = ( sinFactor + cosFactor )*const.sampl
+        sinFactor = (sin(angle)*self.length)*const.sampl
+        cosFactor=(cos(angle)*self.length)*const.sampl
+        dy = ( sinFactor + cosFactor )
         dx = dy
         self.shapeFrameDimension = [ int(round(dx)) , int(round(dy)) ]
         print(self.shapeFrameDimension)
         ###################################################################
-        point1 = [cosFactor,0]
-        point2 = [self.shapeFrameDimension[0],-1*cosFactor]
-        point3 = [sinFactor,-1*self.shapeFrameDimension[1]]
-        point4 = [0,-1*sinFactor]
+        point1 = [sinFactor,0]
+        point2 = [self.shapeFrameDimension[0],-1*sinFactor]
+        point3 = [cosFactor,-1*self.shapeFrameDimension[1]]
+        point4 = [0,-1*cosFactor]
         '''
             x1,y1 = point1
             x2,y2 = point2
@@ -80,7 +81,8 @@ class Square:
                     pass
         self.shapeMatrix = newShapeFrameMatrix
         print(len(self.shapeMatrix))
-        self.displayShape()
+        #self.displayShape()
+        arr2png(self.shapeMatrix)
 
 
     def displayShape(self):

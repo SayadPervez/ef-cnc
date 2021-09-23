@@ -4,11 +4,11 @@ import constants as cont
 
 agl = 90
 
-sq = Square(5)
+sq = Square(50)
 
 #sq.displayShape()
 
-sq.tilt(45)
+#sq.tilt(5)
 
 
 
