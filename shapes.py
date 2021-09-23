@@ -24,7 +24,7 @@ class Square:
 
     def tilt(self,angle):
         '''
-        Tilts the shape
+        Tilts the shape to the given angle
         '''
         angle = radians(angle)
         sinFactor = (sin(angle)*self.length)*const.sampl
@@ -32,18 +32,12 @@ class Square:
         dy = ( sinFactor + cosFactor )
         dx = dy
         self.shapeFrameDimension = [ int(round(dx)) , int(round(dy)) ]
-        print(self.shapeFrameDimension)
+        #print(self.shapeFrameDimension)
         ###################################################################
         point1 = [sinFactor,0]
         point2 = [self.shapeFrameDimension[0],-1*sinFactor]
         point3 = [cosFactor,-1*self.shapeFrameDimension[1]]
         point4 = [0,-1*cosFactor]
-        '''
-            x1,y1 = point1
-            x2,y2 = point2
-            x3,y3 = point3
-            x4,y4 = point4
-        '''
         #edge 1 -> point 4 through 1
         newShapeFrameMatrix=[]
         for i in range(self.shapeFrameDimension[0]):
@@ -80,12 +74,8 @@ class Square:
                 else:
                     pass
         self.shapeMatrix = newShapeFrameMatrix
-        print(len(self.shapeMatrix))
-        #self.displayShape()
-        arr2png(self.shapeMatrix)
 
-
-    def displayShape(self):
+    def printShape(self):
         '''
         Prints shape to console in binary 
 
@@ -97,12 +87,22 @@ class Square:
                 temp+=str(num)
             temp+="\n"
         print(temp)
+
+    def displayShape(self):
+        '''
+        Displays shape as a image
+        '''
+        (arr2png(self.shapeMatrix)).show()
     
     def __generateShapeMatrix__(self,side,angle=0):
         '''
         Generates 2D binary shape matrix
         '''
-        siu = side*const.sampl # sim => side in micrometers (u kind of looks like Mu)
-        self.shapeMatrix = [[1 for _ in range(siu)] for _ in range(siu)]
-        self.shapeFrameDimension = [siu,siu]        # shapeFrameDimension changes on tilting
         self.dimensions=[self.length*const.sampl,self.angle,'dm,°']     # only angle of dimension changes on tilting
+        if(angle==0 or angle%90==0):
+            siu = side*const.sampl # sim => side in micrometers (u kind of looks like Mu)
+            self.shapeMatrix = [[1 for _ in range(siu)] for _ in range(siu)]
+            self.shapeFrameDimension = [siu,siu]        # shapeFrameDimension changes on tilting
+        else:
+            self.tilt(angle)
+

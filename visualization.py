@@ -27,5 +27,5 @@ def arr2png(arr):
     ar[:,:,2]=ar2
     img=im.fromarray(ar,'RGB')
     img.save('./IMG/img.png')
-    img.show()
+    return(img)
 
