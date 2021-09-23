@@ -26,9 +26,62 @@ class Square:
         Tilts the shape
         '''
         angle = radians(angle)
-        dy = ((sin(angle)*self.length) + (cos(angle)*self.length))*const.sampl
+        sinFactor = (sin(angle)*self.length)
+        cosFactor=(cos(angle)*self.length)
+        dy = ( sinFactor + cosFactor )*const.sampl
         dx = dy
         self.shapeFrameDimension = [ int(round(dx)) , int(round(dy)) ]
+        print(self.shapeFrameDimension)
+        ###################################################################
+        point1 = [cosFactor,0]
+        point2 = [self.shapeFrameDimension[0],-1*cosFactor]
+        point3 = [sinFactor,-1*self.shapeFrameDimension[1]]
+        point4 = [0,-1*sinFactor]
+        '''
+            x1,y1 = point1
+            x2,y2 = point2
+            x3,y3 = point3
+            x4,y4 = point4
+        '''
+        #edge 1 -> point 4 through 1
+        newShapeFrameMatrix=[]
+        for i in range(self.shapeFrameDimension[0]):
+            temp = []
+            for j in range(self.shapeFrameDimension[1]):
+                currentPoint = [i,-1*j]
+                if(pospl(point4,point1,currentPoint)==1):
+                    temp.append(0)
+                else:
+                    temp.append(1)
+            newShapeFrameMatrix.append(temp)
+        #edge 2 -> point 1 through 2
+        for i in range(self.shapeFrameDimension[0]):
+            for j in range(self.shapeFrameDimension[1]):
+                currentPoint = [i,-1*j]
+                if(pospl(point1,point2,currentPoint)==1):
+                    newShapeFrameMatrix[i][j]=0
+                else:
+                    pass
+        #edge 3 -> point 2 through 3
+        for i in range(self.shapeFrameDimension[0]):
+            for j in range(self.shapeFrameDimension[1]):
+                currentPoint = [i,-1*j]
+                if(pospl(point2,point3,currentPoint)==1):
+                    newShapeFrameMatrix[i][j]=0
+                else:
+                    pass
+        #edge 4 -> point 3 through 4
+        for i in range(self.shapeFrameDimension[0]):
+            for j in range(self.shapeFrameDimension[1]):
+                currentPoint = [i,-1*j]
+                if(pospl(point3,point4,currentPoint)==1):
+                    newShapeFrameMatrix[i][j]=0
+                else:
+                    pass
+        self.shapeMatrix = newShapeFrameMatrix
+        print(len(self.shapeMatrix))
+        self.displayShape()
+
 
     def displayShape(self):
         '''

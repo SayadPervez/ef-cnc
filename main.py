@@ -4,16 +4,14 @@ import constants as cont
 
 agl = 90
 
-sq = Square(150)
+sq = Square(5)
 
-print("angle - ",agl)
+#sq.displayShape()
 
-print("Before tilting : ",end="")
-print(sq.shapeFrameDimension)
+sq.tilt(45)
 
-sq.tilt(agl)
 
-print("After tilting : ",end="")
-print(sq.shapeFrameDimension)
+
+
 
 
