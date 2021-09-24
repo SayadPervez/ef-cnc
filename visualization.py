@@ -28,6 +28,7 @@ def arr2png(arr):
     img=im.fromarray(ar,'RGB')
     img.save('./IMG/img.png')
     return(img)
+    
 def png2arr(img):
     ar=np.array(img,dtype='int64')
     print(np.shape(ar))
