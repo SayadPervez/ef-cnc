@@ -1,7 +1,7 @@
 import numpy as np  
 from PIL import Image as im
 
-def arr2png(arr):
+def arr2png(arr,name_=""):
     l,b=np.shape(arr)
     ar=np.zeros((l,b,3),dtype=np.uint8)
     a=np.array(arr, dtype=str)
@@ -26,13 +26,15 @@ def arr2png(arr):
     ar[:,:,1]=ar1
     ar[:,:,2]=ar2
     img=im.fromarray(ar,'RGB')
-    img.save('./IMG/img.png')
+    if(name_==""):
+        img.save('./IMG/img.png')
+    else:
+        img.save('./IMG/'+str(name_)+".png")
     return(img)
 
 def png2arr(img_path):
     img = im.open(img_path)
     ar=np.array(img,dtype='int64')
-    print(np.shape(ar))
     l,b,h=np.shape(ar)
     a=np.zeros((l,b),dtype=str)
     ar_avg=np.zeros((l,b),dtype='int64')
@@ -60,6 +62,5 @@ def png2arr(img_path):
                 a[i][j]=0
             if e=='1':
                 a[i][j]=1
-
     return a
 
