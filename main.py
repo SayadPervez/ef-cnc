@@ -1,12 +1,15 @@
 from functions import *
 from shapes import Square
 import constants as cont
-
-agl = 90
+from visualization import png2arr
 
 sq = Square(50,30)
 
-sq.print()
+initialShapeArray = sq.shapeMatrix
+
+ret_array = png2arr("./IMG/img.png")
+
+print(initialShapeArray==ret_array)
 
 
 
