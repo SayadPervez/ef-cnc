@@ -101,8 +101,8 @@ class Square:
         self.dimensions=[self.length*const.sampl,self.angle,'dm,°']     # only angle of dimension changes on tilting
         if(angle==0 or angle%90==0):
             siu = side*const.sampl # sim => side in micrometers (u kind of looks like Mu)
-            self.shapeMatrix = [[1 for _ in range(siu)] for _ in range(siu)]
-            self.shapeFrameDimension = [siu,siu]        # shapeFrameDimension changes on tilting
+            self.shapeMatrix = [[1]*siu]*siu
+            self.shapeFrameDimension = [siu,siu]       # shapeFrameDimension changes on tilting
         else:
             self.tilt(angle)
 
