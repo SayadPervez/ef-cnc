@@ -130,7 +130,7 @@ class Rectangle:
         '''
         Tilts the shape to the given angle
         '''
-        angle = radians(angle)
+        angle = (radians(90)-radians(angle)) if (angle!=90) else radians(angle)
         sinFactorHeight = (sin(angle)*self.height)*const.sampl
         cosFactorHeight =(cos(angle)*self.height)*const.sampl
         sinFactorLength = (sin(angle)*self.length)*const.sampl
@@ -140,11 +140,11 @@ class Rectangle:
         self.shapeFrameDimension = [ int(round(dx)) , int(round(dy)) ]
         #print(self.shapeFrameDimension)
         ###################################################################
-        '''
-        point1 = [sinFactor,0]
-        point2 = [self.shapeFrameDimension[0],-1*sinFactor]
-        point3 = [cosFactor,-1*self.shapeFrameDimension[1]]
-        point4 = [0,-1*cosFactor]
+        
+        point1 = [cosFactorLength,0]
+        point2 = [self.shapeFrameDimension[0],-1*cosFactorHeight]
+        point3 = [sinFactorHeight,-1*self.shapeFrameDimension[1]]
+        point4 = [0,-1*sinFactorLength]
         #edge 1 -> point 4 through 1
         newShapeFrameMatrix=[]
         for i in range(self.shapeFrameDimension[0]):
@@ -181,7 +181,6 @@ class Rectangle:
                 else:
                     pass
         self.shapeMatrix = newShapeFrameMatrix
-        '''
 
     def printShape(self):
         '''
@@ -207,10 +206,13 @@ class Rectangle:
         Generates 2D binary shape matrix
         '''
         self.dimensions=[self.length*const.sampl,self.height*const.sampl,self.angle,'dm,dm,°']     # only angle of dimension changes on tilting
-        if(angle==0 or angle%90==0):
+        if(angle==0 or angle%180==0):
             liu = length*const.sampl # liu => length in micrometers (u kind of looks like Mu)
             hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
             self.shapeMatrix = [[1 for _ in range(liu)] for _ in range(hiu)]
             self.shapeFrameDimension = [liu,hiu]        # shapeFrameDimension changes on tilting
+        elif angle==90:
+            self.__generateShapeMatrix__(height,length,0)
+            self.angle=90
         else:
             self.tilt(angle)

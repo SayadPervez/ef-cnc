@@ -3,10 +3,13 @@ from shapes import Rectangle, Square
 import constants as cont
 from visualization import *
 
-theta = 89
+theta = 90
 
-rect = Rectangle(5,2,theta)
-print(str(theta) +f"\t{rect.shapeFrameDimension}")
+rect = Rectangle(50,20,theta)
+
+rect.displayShape()
+rect.print()
+
 
 
 
