@@ -111,7 +111,7 @@ class Rectangle:
     Give length and height in milli-meter( mm ) and angle in degrees( ° )
     '''
     def __init__(self,length,height,angle=0):
-        self.myShape="square"
+        self.myShape="rectangle"
         self.length = length
         self.height = height
         self.angle = angle
@@ -216,3 +216,60 @@ class Rectangle:
             self.angle=90
         else:
             self.tilt(angle)
+
+class Circle:
+    '''
+    Give radius in milli-meter( mm )
+    '''
+    def __init__(self,radius):
+        self.myShape="circle"
+        self.radius = radius
+        self.__generateShapeMatrix__(radius)
+
+    def __repr__(self):
+        return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
+    
+    def print(self):
+        '''
+        Prints Object parameters to console
+        '''
+        print(repr(self))
+
+    def printShape(self):
+        '''
+        Prints shape to console in binary 
+
+        #### Warning : CPU intensive task
+        '''
+        temp = ""
+        for li in self.shapeMatrix:
+            for num in li:
+                temp+=str(num)
+            temp+="\n"
+        print(temp)
+
+    def displayShape(self):
+        '''
+        Displays shape as a image
+        '''
+        (arr2png(self.shapeMatrix)).show()
+    
+    def isPointInCircle(self,ptX,ptY,radius):
+        if( (ptX-radius)**2 + (ptY-radius)**2 <= radius**2 ):
+            return(True)
+        else:
+            return(False)
+
+    def __generateShapeMatrix__(self,radius):
+        '''
+        Generates 2D binary shape matrix
+        '''
+        self.dimensions=[self.radius*const.sampl,'dm']     # only angle of dimension changes on tilting
+        diu = 2*radius*const.sampl # diu => diameter in micrometers (u kind of looks like Mu)
+        self.shapeFrameDimension = [diu,diu]        # shapeFrameDimension changes on tilting
+        shapeSkeleton = [[0]*diu for _ in range(diu)]
+        for i in range(diu):
+            for j in range(diu):
+                if(self.isPointInCircle(i,j,diu/2)):
+                    shapeSkeleton[i][j]=1
+        self.shapeMatrix=shapeSkeleton

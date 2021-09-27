@@ -1,14 +1,13 @@
 from functions import *
-from shapes import Rectangle, Square
+from shapes import Circle, Rectangle, Square
 import constants as cont
 from visualization import *
 
-theta = 90
+circ = Circle(100)
 
-rect = Rectangle(50,20,theta)
+circ.print()
 
-rect.displayShape()
-rect.print()
+circ.displayShape()
 
 
 
