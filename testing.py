@@ -1,9 +1,9 @@
 from functions import *
-from shapes import Square
+from shapes import Rectangle, Square
 import constants as cont
 from visualization import *
 
-sq = Square(50,30)
+sq = Rectangle(50,20,90)
 
 initialShapeArray = sq.shapeMatrix
 print(type(initialShapeArray))
