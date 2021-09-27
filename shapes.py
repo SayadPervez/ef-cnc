@@ -149,24 +149,11 @@ class Rectangle:
                 currentPoint = [i,-1*j]
                 if(pospl(point1,point2,currentPoint)==1):
                     newShapeFrameMatrix[i][j]=0
-                else:
-                    pass
-        #edge 3 -> point 2 through 3
-        for i in range(self.shapeFrameDimension[0]):
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
                 if(pospl(point2,point3,currentPoint)==1):
                     newShapeFrameMatrix[i][j]=0
-                else:
-                    pass
-        #edge 4 -> point 3 through 4
-        for i in range(self.shapeFrameDimension[0]):
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
                 if(pospl(point3,point4,currentPoint)==1):
                     newShapeFrameMatrix[i][j]=0
-                else:
-                    pass
+
         self.shapeMatrix = newShapeFrameMatrix
 
     def printShape(self):
@@ -196,7 +183,7 @@ class Rectangle:
         if(angle==0 or angle%180==0):
             liu = length*const.sampl # liu => length in micrometers (u kind of looks like Mu)
             hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
-            self.shapeMatrix = [[1 for _ in range(liu)] for _ in range(hiu)]
+            self.shapeMatrix = [[1]*liu]*hiu
             self.shapeFrameDimension = [liu,hiu]        # shapeFrameDimension changes on tilting
         elif angle==90:
             self.__generateShapeMatrix__(height,length,0)
