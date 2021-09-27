@@ -1,16 +1,12 @@
 from functions import *
-from shapes import Square
+from shapes import Rectangle, Square
 import constants as cont
 from visualization import *
 
-sq = Square(50,30)
+theta = 89
 
-initialShapeArray = sq.shapeMatrix
-
-ret_array = png2arr("./IMG/img.png")
-
-print(len(ret_array),len(ret_array[0]))
-print(sq.shapeFrameDimension)
+rect = Rectangle(5,2,theta)
+print(str(theta) +f"\t{rect.shapeFrameDimension}")
 
 
 
