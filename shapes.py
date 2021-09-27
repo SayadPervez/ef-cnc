@@ -55,24 +55,11 @@ class Square:
                 currentPoint = [i,-1*j]
                 if(pospl(point1,point2,currentPoint)==1):
                     newShapeFrameMatrix[i][j]=0
-                else:
-                    pass
-        #edge 3 -> point 2 through 3
-        for i in range(self.shapeFrameDimension[0]):
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
                 if(pospl(point2,point3,currentPoint)==1):
                     newShapeFrameMatrix[i][j]=0
-                else:
-                    pass
-        #edge 4 -> point 3 through 4
-        for i in range(self.shapeFrameDimension[0]):
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
                 if(pospl(point3,point4,currentPoint)==1):
                     newShapeFrameMatrix[i][j]=0
-                else:
-                    pass
+
         self.shapeMatrix = newShapeFrameMatrix
 
     def printShape(self):
