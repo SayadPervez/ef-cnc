@@ -85,7 +85,7 @@ def rotate(arr,angle):
     bottom=max(res[1])
     right=max(res[0])
     left=min(res[0])
-    rotated=r[left:right,top:bottom]
+    rotated=r[left:right+1,top:bottom+1]
     rotated[rotated=='r']='1'
     #rotated=arr2png(rotated,name_="")
     return(rotated.tolist())
