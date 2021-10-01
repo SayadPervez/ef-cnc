@@ -62,5 +62,30 @@ def png2arr(img_path):
                 a[i][j]=0
             if e=='1':
                 a[i][j]=1
-    return a
+    return(a)
 
+def rotate(arr,angle):
+    """
+    Will update later
+    """
+    a=np.array(arr,dtype=str)
+    a[a=='1']='r'
+    l,b=np.shape(a)
+    enlarge_factor = round((l**2+b**2)**0.5)*2
+    r=np.zeros(  (  enlarge_factor  ,  enlarge_factor  )             ,dtype=str)
+    r[(enlarge_factor//2)-(l//2):(enlarge_factor//2)+(l//2),(enlarge_factor//2)-(b//2):(enlarge_factor//2)+(b//2)]=a
+    r[r=='']='0'
+    r=arr2png(r,name_="")
+    r=r.rotate(angle)
+    r.save('./IMG/rotate.png')
+    r=png2arr('./IMG/rotate.png')
+    r=np.array(r,dtype=str)
+    res=np.where(r=='r')
+    top=min(res[1])
+    bottom=max(res[1])
+    right=max(res[0])
+    left=min(res[0])
+    rotated=r[left:right,top:bottom]
+    rotated[rotated=='r']='1'
+    #rotated=arr2png(rotated,name_="")
+    return(rotated.tolist())
