@@ -1,6 +1,6 @@
 from functions import *
 import constants as const
-from math import sin,cos,radians
+from math import sin,cos,radians,pi
 from visualization import arr2png
 
 class Square:
@@ -246,4 +246,79 @@ class Circle:
             for j in range(diu):
                 if(self.isPointInCircle(i,j,diu/2)):
                     shapeSkeleton[i][j]=1
+        self.shapeMatrix=shapeSkeleton
+
+class Cone:
+    '''
+    Give radius in milli-meter( mm )
+    '''
+    def __init__(self,height,radius):
+        self.myShape="cone"
+        self.radius = round(radius)
+        self.height = round(height)
+        self.slantHeight = round((radius**2 + height**2)**0.5)
+        self.theta = 2*pi*radius/self.slantHeight
+        halfWidth = sin(radians(self.theta/2)) * self.slantHeight
+        self.width = round(2 * halfWidth)
+        self.__generateShapeMatrix__(height,radius)
+
+    def __repr__(self):
+        return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nShape Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
+    
+    def print(self):
+        '''
+        Prints Object parameters to console
+        '''
+        print(repr(self))
+
+    def printShape(self):
+        '''
+        Prints shape to console in binary 
+
+        #### Warning : CPU intensive task
+        '''
+        temp = ""
+        for li in self.shapeMatrix:
+            for num in li:
+                temp+=str(num)
+            temp+="\n"
+        print(temp)
+
+    def displayShape(self):
+        '''
+        Displays shape as a image
+        '''
+        (arr2png(self.shapeMatrix)).show()
+    
+    def isPointInCircle(self,ptX,ptY,radius):
+        if( (ptX-radius)**2 + (ptY-(self.width*const.sampl/2))**2 <= radius**2 ):
+            return(True)
+        else:
+            return(False)
+
+    def __generateShapeMatrix__(self,height,radius):
+        '''
+        Generates 2D binary shape matrix
+        '''
+        self.dimensions=[self.height*const.sampl,self.radius*const.sampl,'dm,dm']     # only angle of dimension changes on tilting
+        riu = radius*const.sampl # riu => radius in micrometers (u kind of looks like Mu)
+        hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
+        wiu = self.width*const.sampl # wiu => width in micrometers (u kind of looks like Mu)
+        self.shapeFrameDimension = [wiu,hiu]        # shapeFrameDimension changes on tilting
+        shapeSkeleton = [[0]*wiu for _ in range(hiu)]
+        for i in range(hiu):
+            for j in range(wiu):
+                if(self.isPointInCircle(i,j,riu)):
+                    shapeSkeleton[i][j]=1
+        curveIntersectHeight = round(((self.slantHeight*const.sampl)**2 - (self.width*const.sampl)**2)**0.5)
+        interscetPt1 = [0,curveIntersectHeight-hiu]
+        interscetPt2 = [wiu,curveIntersectHeight-hiu]
+        pointy = [wiu/2,hiu]
+        for i in range(self.shapeFrameDimension[0]):
+            for j in range(self.shapeFrameDimension[1]):
+                currentPoint = [i,-1*j]
+                if(pospl(pointy,interscetPt1,currentPoint)==1):
+                    shapeSkeleton[i][j]=0
+                if(pospl(interscetPt2,pointy,currentPoint)==1):
+                    shapeSkeleton[i][j]=0
         self.shapeMatrix=shapeSkeleton
