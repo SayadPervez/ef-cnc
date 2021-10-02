@@ -313,7 +313,7 @@ class Cone:
         curveIntersectHeight = round(((self.slantHeight*const.sampl)**2 - (self.width*const.sampl)**2)**0.5)
         interscetPt1 = [0,curveIntersectHeight-hiu]
         interscetPt2 = [wiu,curveIntersectHeight-hiu]
-        pointy = [wiu/2,hiu]
+        pointy = [wiu/2,-hiu]
         for i in range(self.shapeFrameDimension[0]):
             for j in range(self.shapeFrameDimension[1]):
                 currentPoint = [i,-1*j]
