@@ -258,16 +258,14 @@ class Cone:
         self.cone_radius = round(cone_radius)
         self.cone_height = round(cone_height)
         self.slantHeight = round((cone_radius**2 + cone_height**2)**0.5)
-        if(cone_radius/cone_height>=1):
-            raise Exception("Illegal cone dimensions.\nCone radius / Cone height ratio must be less than 1")
-            return(0)
         self.theta = 2*180*cone_radius/self.slantHeight
         print('theta = ',self.theta)
-        print(pi)
-        self.frameHeight = self.slantHeight
-        halfWidth = sin(radians(self.theta/2)) * self.slantHeight
-        self.width = round(2 * halfWidth)
-        self.__generateShapeMatrix__(self.frameHeight,self.width)
+        if(self.theta>=360):
+            raise Exception("Illegal cone dimensions.")
+            return(0)
+        self.cone_type = 1 if self.theta<=180 else 2
+        print('Cone type : ',self.cone_type)
+        self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
 
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nShape Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
@@ -303,19 +301,38 @@ class Cone:
         else:
             return(False)
 
-    def __generateShapeMatrix__(self,radius,width):
+    def __generateShapeMatrix__(self,radius,type):
         '''
         Generates 2D binary shape matrix
         '''
-        # here radius and frame height are the same
         #self.dimensions=[self.height*const.sampl,self.radius*const.sampl,'dm,dm']     # only angle of dimension changes on tilting
+        
         riu = radius*const.sampl # riu => radius in micrometers (u kind of looks like Mu)
-        hiu = riu # hiu => height in micrometers (u kind of looks like Mu)
-        wiu = width*const.sampl # wiu => width in micrometers (u kind of looks like Mu)
-        self.shapeFrameDimension = [wiu,hiu]        # shapeFrameDimension changes on tilting
-        shapeSkeleton = [[0]*wiu for _ in range(hiu)]
-        for i in range(hiu):
-            for j in range(wiu):
-                if(self.isPointInCircle(i,j,riu)):
-                    shapeSkeleton[i][j]=1
-        self.shapeMatrix = shapeSkeleton
+        # type 1 cone
+        # here, radius and height are the same
+        if(type==1):
+            halfWidth = sin(radians(self.theta/2)) * self.slantHeight
+            self.width = round(2 * halfWidth)
+            hiu = riu # hiu => height in micrometers (u kind of looks like Mu)
+            wiu = self.width*const.sampl # wiu => width in micrometers (u kind of looks like Mu)
+            self.shapeFrameDimension = [wiu,hiu]        # shapeFrameDimension changes on tilting
+            shapeSkeleton = [[0]*wiu for _ in range(hiu)]
+            for i in range(hiu):
+                for j in range(wiu):
+                    if(self.isPointInCircle(i,j,riu)):
+                        shapeSkeleton[i][j]=1
+            xh = round(((riu*riu) - (wiu/2)**2)**0.5)
+            pointy = [wiu/2,-hiu]
+            Intercept_1 = [0,-hiu+xh]
+            Intercept_2 = [wiu,-hiu+xh]
+            print(xh,hiu)
+            for i in range(hiu):
+                for j in range(wiu):
+                    currentPoint = [j,-i]
+                    if(pospl(pointy,Intercept_1,currentPoint)==1):
+                        shapeSkeleton[i][j]=0
+                    if(pospl(pointy,Intercept_2,currentPoint)==-1):
+                        shapeSkeleton[i][j]=0
+            self.shapeMatrix = shapeSkeleton
+        else:
+            raise Exception("You still didn't code this part idiot")
