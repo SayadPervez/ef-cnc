@@ -344,7 +344,8 @@ class Cone:
             phi = 360-self.theta
             dw = round(riu*sin(radians(phi/2)))
             pointy = [wiu/2,-riu]
-
+            Intercept_1 = [(wiu/2)-dw,-hiu]
+            Intercept_2 = [(wiu/2)+dw,-hiu]
             for i in range(hiu):
                 for j in range(wiu):
                     currentPoint = [j,-i]
