@@ -1,3 +1,5 @@
+import numpy as np
+
 # pospl -> POSition Point Line
 def pospl(pt1,pt2,pt3):
     '''
@@ -20,3 +22,26 @@ def pospl(pt1,pt2,pt3):
         return(1)#print('right hand fold')
     else:
         return(0)#print('same line')
+
+def evenize(a2dlist):
+    '''
+    Input and output are 2D list.
+    If number of rows or columns is not even, this function fixes it.
+    Used to achieve bug free rotation
+    '''
+    i,j = len(a2dlist),len(a2dlist[0])
+    if(i%2==0 and j%2==0):
+        return(a2dlist)
+    elif(i%2!=0):
+        # if number of rows (height) is not even
+        min_index = min([sum(_) for _ in a2dlist])
+        del(a2dlist[min_index])
+        return(a2dlist)
+    else:
+        # if number of cols (width) is not even
+        a = a2dlist.copy()
+        x = np.array(a).T.tolist()
+        min_index = min([sum(_) for _ in x])
+        del(x[min_index])
+        x = np.array(x).T.tolist()
+        return(x)
