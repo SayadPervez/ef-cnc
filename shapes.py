@@ -317,22 +317,20 @@ class Cone:
             wiu = self.width*const.sampl # wiu => width in micrometers (u kind of looks like Mu)
             self.shapeFrameDimension = [wiu,hiu]        # shapeFrameDimension changes on tilting
             shapeSkeleton = [[0]*wiu for _ in range(hiu)]
-            for i in range(hiu):
-                for j in range(wiu):
-                    if(self.isPointInCircle(i,j,riu)):
-                        shapeSkeleton[i][j]=1
             xh = round(((riu*riu) - (wiu/2)**2)**0.5)
             pointy = [wiu/2,-hiu]
             Intercept_1 = [0,-hiu+xh]
             Intercept_2 = [wiu,-hiu+xh]
-            print(xh,hiu)
             for i in range(hiu):
                 for j in range(wiu):
                     currentPoint = [j,-i]
+                    if(self.isPointInCircle(i,j,riu)):
+                        shapeSkeleton[i][j]=1
                     if(pospl(pointy,Intercept_1,currentPoint)==1):
                         shapeSkeleton[i][j]=0
                     if(pospl(pointy,Intercept_2,currentPoint)==-1):
-                        shapeSkeleton[i][j]=0
+                        shapeSkeleton[i][j]=0                    
+
             self.shapeMatrix = shapeSkeleton
         else:
             raise Exception("You still didn't code this part idiot")
