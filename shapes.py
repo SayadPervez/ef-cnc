@@ -333,4 +333,21 @@ class Cone:
 
             self.shapeMatrix = shapeSkeleton
         else:
-            raise Exception("You still didn't code this part idiot")
+            # type 2 cone here
+            dh = -1*cos(radians(self.theta/2))*riu
+            h = riu
+            wiu = round(2*riu)
+            self.width = 2*radius
+            hiu = round(h+dh) # actual height of the frame
+            self.shapeFrameDimension = [wiu,hiu]        # shapeFrameDimension changes on tilting
+            shapeSkeleton = [[0]*wiu for _ in range(hiu)]
+            phi = 360-self.theta
+            dw = round(riu*sin(radians(phi/2)))
+            pointy = [wiu/2,-riu]
+
+            for i in range(hiu):
+                for j in range(wiu):
+                    currentPoint = [j,-i]
+                    if(self.isPointInCircle(i,j,riu)):
+                        shapeSkeleton[i][j]=1
+            self.shapeMatrix = shapeSkeleton
