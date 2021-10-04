@@ -251,7 +251,7 @@ class Circle:
 
 class Cone:
     '''
-    Give radius in milli-meter( mm )
+    Give cone-height & cone-radius in milli-meter( mm )
     '''
     def __init__(self,cone_height,cone_radius):
         self.myShape="cone"
@@ -259,12 +259,12 @@ class Cone:
         self.cone_height = round(cone_height)
         self.slantHeight = round((cone_radius**2 + cone_height**2)**0.5)
         self.theta = 2*180*cone_radius/self.slantHeight
-        print('theta = ',self.theta)
+        #print('theta = ',self.theta)
         if(self.theta>=360):
             raise Exception("Illegal cone dimensions.")
             return(0)
         self.cone_type = 1 if self.theta<=180 else 2
-        print('Cone type : ',self.cone_type)
+        #print('Cone type : ',self.cone_type)
         self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
 
     def __repr__(self):
@@ -305,8 +305,6 @@ class Cone:
         '''
         Generates 2D binary shape matrix
         '''
-        #self.dimensions=[self.height*const.sampl,self.radius*const.sampl,'dm,dm']     # only angle of dimension changes on tilting
-        
         riu = radius*const.sampl # riu => radius in micrometers (u kind of looks like Mu)
         # type 1 cone
         # here, radius and height are the same
@@ -329,9 +327,7 @@ class Cone:
                     if(pospl(pointy,Intercept_1,currentPoint)==1):
                         shapeSkeleton[i][j]=0
                     if(pospl(pointy,Intercept_2,currentPoint)==-1):
-                        shapeSkeleton[i][j]=0                    
-
-            self.shapeMatrix = shapeSkeleton
+                        shapeSkeleton[i][j]=0
         else:
             # type 2 cone here
             dh = -1*cos(radians(self.theta/2))*riu
@@ -353,4 +349,5 @@ class Cone:
                         shapeSkeleton[i][j]=1
                     if(pospl(pointy,Intercept_1,currentPoint)==1 and pospl(pointy,Intercept_2,currentPoint)==-1):
                         shapeSkeleton[i][j]=0
-            self.shapeMatrix = shapeSkeleton
+        self.dimensions=[self.cone_height*const.sampl,self.cone_radius*const.sampl,'dm,dm']     # only angle of dimension changes on tilting
+        self.shapeMatrix = shapeSkeleton

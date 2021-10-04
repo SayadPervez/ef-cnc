@@ -5,6 +5,6 @@ import visualization as vis
 
 #cone = Cone(24,27) # -> type 2
 #cone = Cone(30,5) # -> type 1
-cone = Cone(173.2,100)
+cone = Cone(17.32,10) # -> 180 deg cone
 cone.displayShape()
-#x = vis.arr2png(vis.rotate(cone.shapeMatrix,180)).show()
+vis.arr2png(vis.rotate(cone.shapeMatrix,18)).show()
