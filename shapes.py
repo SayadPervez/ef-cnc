@@ -351,4 +351,6 @@ class Cone:
                     currentPoint = [j,-i]
                     if(self.isPointInCircle(i,j,riu)):
                         shapeSkeleton[i][j]=1
+                    if(pospl(pointy,Intercept_1,currentPoint)==1 and pospl(pointy,Intercept_2,currentPoint)==-1):
+                        shapeSkeleton[i][j]=0
             self.shapeMatrix = shapeSkeleton
