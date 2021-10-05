@@ -351,3 +351,51 @@ class Cone:
                         shapeSkeleton[i][j]=0
         self.dimensions=[self.cone_height*const.sampl,self.cone_radius*const.sampl,'dm,dm']     # only angle of dimension changes on tilting
         self.shapeMatrix = shapeSkeleton
+
+class Canvas:
+    '''
+    Give length and height in milli-meter( mm )
+    '''
+    def __init__(self,length,height):
+        self.myShape="CANVAS"
+        self.length = length
+        self.height = height
+        self.__generateShapeMatrix__(length,height)
+
+    def __repr__(self):
+        return(f"Object Shape \t: {self.myShape}\nSide Length \t: {self.length} mm\nSide Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
+    
+    def print(self):
+        '''
+        Prints Object parameters to console
+        '''
+        print(repr(self))
+
+    def printShape(self):
+        '''
+        Prints shape to console in binary 
+
+        #### Warning : CPU intensive task
+        '''
+        temp = ""
+        for li in self.shapeMatrix:
+            for num in li:
+                temp+=str(num)
+            temp+="\n"
+        print(temp)
+
+    def displayShape(self):
+        '''
+        Displays shape as a image
+        '''
+        (arr2png(self.shapeMatrix)).show()
+    
+    def __generateShapeMatrix__(self,length,height,angle=0):
+        '''
+        Generates 2D binary shape matrix
+        '''
+        self.dimensions=[self.length*const.sampl,self.height*const.sampl,'dm,dm']
+        liu = length*const.sampl # liu => length in micrometers (u kind of looks like Mu)
+        hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
+        self.shapeMatrix = [[0]*liu]*hiu
+        self.shapeFrameDimension = [liu,hiu]        # shapeFrameDimension changes on tilting

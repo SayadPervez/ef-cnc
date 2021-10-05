@@ -64,10 +64,13 @@ def png2arr(img_path):
                 a[i][j]=1
     return(a)
 
-def rotate(arr,angle):
+def rotate(obj,angle):
     """
     Will update later
     """
+    if(obj.myShape=="CANVAS"):
+        raise Exception("CANVAS cannot be rotated")
+    arr = obj.shapeMatrix
     a=np.array(arr,dtype=str)
     a[a=='1']='r'
     l,b=np.shape(a)
