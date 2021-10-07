@@ -11,6 +11,7 @@ class Square:
     def __init__(self,side,angle=0):
         self.myShape="square"
         self.length = side
+        self.surfaceArea = side*side
         self.angle = angle
         self.__generateShapeMatrix__(side,angle)
 
@@ -103,6 +104,7 @@ class Rectangle:
         self.length = length
         self.height = height
         self.angle = angle
+        self.surfaceArea = length*height
         self.__generateShapeMatrix__(length,height,angle)
 
     def __repr__(self):
@@ -199,6 +201,7 @@ class Circle:
     def __init__(self,radius):
         self.myShape="circle"
         self.radius = radius
+        self.surfaceArea = pi*radius*radius
         self.__generateShapeMatrix__(radius)
 
     def __repr__(self):
@@ -259,6 +262,7 @@ class Cone:
         self.cone_height = round(cone_height)
         self.slantHeight = round((cone_radius**2 + cone_height**2)**0.5)
         self.theta = 2*180*cone_radius/self.slantHeight
+        self.surfaceArea = pi*(self.slantHeight**2)*self.theta/360
         #print('theta = ',self.theta)
         if(self.theta>=360):
             raise Exception("Illegal cone dimensions.")
@@ -360,6 +364,7 @@ class Canvas:
         self.myShape="CANVAS"
         self.length = length
         self.height = height
+        self.surfaceArea = length*height
         self.__generateShapeMatrix__(length,height)
 
     def __repr__(self):
