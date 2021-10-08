@@ -66,3 +66,15 @@ def singleFit(canvas,objectList):
         else:
             returnDict[obj.uid]=(False,False)
     return(returnDict,objectList)
+
+def fitAll(canvas,objectList):
+    '''
+    This is a theoretical calculation and can sometimes fail to give practical results
+    '''
+    if(type(objectList)!=type([])):
+        objectList = [objectList]
+    canvasArea = canvas.surfaceArea
+    objectArea = sum([_.surfaceArea for _ in objectList])
+    return(True if canvasArea > objectArea else False)
+
+    
