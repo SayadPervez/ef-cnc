@@ -75,6 +75,6 @@ def fitAll(canvas,objectList):
         objectList = [objectList]
     canvasArea = canvas.surfaceArea
     objectArea = sum([_.surfaceArea for _ in objectList])
-    return(True if canvasArea > objectArea else False)
+    return(True if canvasArea >= objectArea else False)
 
     
