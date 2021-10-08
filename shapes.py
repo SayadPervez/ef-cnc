@@ -1,7 +1,7 @@
 from functions import *
 import constants as const
 from math import sin,cos,radians,pi
-from visualization import arr2png
+from visualization import arr2png,rotate
 from random import randint as ri
 
 class Square:
@@ -278,6 +278,9 @@ class Cone:
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nShape Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
     
+    def tilt(self,angle):
+        self.shapeMatrix=rotate(self,angle)
+
     def print(self):
         '''
         Prints Object parameters to console
