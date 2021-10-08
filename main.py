@@ -5,5 +5,8 @@ import visualization as vis
 
 canvas = Canvas(1300,1300)
 rect = Rectangle(100,1350)
+rect2 = Rectangle(100,2000)
 
-print(singleFit(canvas,rect))
+d,ol=singleFit(canvas,[rect,rect2])
+for _ in ol:
+    print(d[_.uid])
