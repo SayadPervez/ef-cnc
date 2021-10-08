@@ -2,13 +2,14 @@ from functions import *
 import constants as const
 from math import sin,cos,radians,pi
 from visualization import arr2png
-import time
+from random import randint as ri
 
 class Square:
     '''
     Give side in milli-meter( mm ) and angle in degrees( ° )
     '''
     def __init__(self,side,angle=0):
+        self.uid = ri(0,1000000000000000000000)
         self.myShape="square"
         self.length = side
         self.surfaceArea = side*side
@@ -100,6 +101,7 @@ class Rectangle:
     Give length and height in milli-meter( mm ) and angle in degrees( ° )
     '''
     def __init__(self,length,height,angle=0):
+        self.uid = ri(0,1000000000000000000000)
         self.myShape="rectangle"
         self.length = length
         self.height = height
@@ -199,6 +201,7 @@ class Circle:
     Give radius in milli-meter( mm )
     '''
     def __init__(self,radius):
+        self.uid = ri(0,1000000000000000000000)
         self.myShape="circle"
         self.radius = radius
         self.surfaceArea = pi*radius*radius
@@ -257,6 +260,7 @@ class Cone:
     Give cone-height & cone-radius in milli-meter( mm )
     '''
     def __init__(self,cone_height,cone_radius):
+        self.uid = ri(0,1000000000000000000000)
         self.myShape="cone"
         self.cone_radius = round(cone_radius)
         self.cone_height = round(cone_height)
@@ -361,6 +365,7 @@ class Canvas:
     Give length and height in milli-meter( mm )
     '''
     def __init__(self,length,height):
+        self.uid = ri(0,1000000000000000000000)
         self.myShape="CANVAS"
         self.length = length
         self.height = height

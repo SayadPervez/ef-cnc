@@ -23,6 +23,7 @@ def pospl(pt1,pt2,pt3):
     else:
         return(0)#print('same line')
 
+# evenize -> makes arrays even in size for rotation compatibility
 def evenize(a2dlist):
     '''
     Input and output are 2D list.
@@ -45,3 +46,22 @@ def evenize(a2dlist):
         del(x[min_index])
         x = np.array(x).T.tolist()
         return(x)
+
+def singleFit(canvas,objectList):
+    returnDict = {}
+    if(type(objectList)!=type([])):
+        objectList = [objectList]
+    for obj in objectList :
+        cl,cb = canvas.shapeFrameDimension
+        chypotunes = (cl**2 + cb**2)**0.5
+        ol,ob = obj.shapeFrameDimension
+        if(ol > cl and ob > cb):
+            return(False,False)
+        elif (ol <= cl and ob <= cb):
+            return(True,0)
+        elif (ol <= cl and ob > cb and ob <= cl and ol <= cb) or (ol > cl and ob <= cb and ol <= cb and ob <= cl):
+            return(True,90)
+        elif (ol<=chypotunes and ob/cb*100<=15 and ol/chypotunes*100<=75) or (ob<=chypotunes and ol/cl*100<=15 and ob/chypotunes*100<=75):
+            return(True,45)
+        else:
+            return(False,False)
