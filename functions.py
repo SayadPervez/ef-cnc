@@ -77,4 +77,11 @@ def fitAll(canvas,objectList):
     objectArea = sum([_.surfaceArea for _ in objectList])
     return(True if canvasArea >= objectArea else False)
 
-    
+def sortSurfaceArea(objectList):
+    if(type(objectList)!=type([])):
+        objectList = [objectList]
+    ret = {}
+    for obj in objectList:
+        ret[obj] = obj.surfaceArea
+    ret = dict(sorted(ret.items(),key = lambda item:item[1]))
+    return(list(ret.keys())[::-1])
