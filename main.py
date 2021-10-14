@@ -3,11 +3,14 @@ from shapes import Canvas, Circle, Rectangle, Square,Cone
 import constants as const
 import algorithm1,algorithm2
 from visualization import *
+from visualization import arr2png as a2p
 
-#x = [Rectangle(20,10),Circle(20),Square(6)]
-#x = [Square(2),Square(2)]
-x = [Circle(25),Square(15),Cone(10,9),Cone(20,3)]
-c = Canvas(100,75)
+sq = Square(5)
+print(sq.shapeFrameDimension)
+a2p(sq).show()
 
-result = algorithm2.run(c,x,True)
-arr2png(result).show()
+input("Waiting for it ...")
+
+sq.tilt(15)
+print(sq.shapeFrameDimension)
+a2p(sq).show()

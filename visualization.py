@@ -2,6 +2,8 @@ import numpy as np
 from PIL import Image as im
 
 def arr2png(arr,name_=""):
+    if("shapes" in str(type(arr))):
+        arr=arr.shapeMatrix
     l,b=np.shape(arr)
     ar=np.zeros((l,b,3),dtype=np.uint8)
     a=np.array(arr, dtype=str)
