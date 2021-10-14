@@ -2,10 +2,12 @@ from functions import *
 from shapes import Canvas, Circle, Rectangle, Square,Cone
 import constants as const
 import algorithm1
+from visualization import *
 
-x = [Rectangle(2,1),Circle(1),Square(1)]
-y = [_.uid for _ in x]
-z = sortSurfaceArea(x)
+#x = [Rectangle(2,1),Circle(2),Square(1)]
+x = [Circle(2),Circle(1)]
+c = Canvas(15,15)
 
-for _ in z:
-    print(_.myShape)
+result = algorithm1.run(c,x)
+print(result)
+arr2png(result).show()
