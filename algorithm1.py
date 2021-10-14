@@ -15,13 +15,14 @@ def fitting(canvas,shapeList):
                 newCanvas = cArray
                 newCanvas[row:row+sx,col:col+sy]+=sArray
                 if(np.count_nonzero(newCanvas==2)<0):
-                    newCanvas = cArray
+                    newCanvas=cArray
                 else:
                     doublebreak=True
                     break
             if(doublebreak==True):
                 break
-    return(newCanvas.tolist())
+        cArray = newCanvas
+    return(cArray.tolist())
         
             
                 
