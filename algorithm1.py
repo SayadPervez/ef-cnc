@@ -1,4 +1,3 @@
-from PIL.Image import new
 import functions as func
 import numpy as np
 from visualization import *
