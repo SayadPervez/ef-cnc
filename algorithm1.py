@@ -1,8 +1,7 @@
 import functions as func
 import numpy as np
-from visualization import *
 
-def fitting(canvas,shapeList):
+def fitting(canvas,shapeList,log_=False):
     cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
     cx,cy = np.shape(cArray)
     for shape in shapeList:
@@ -22,15 +21,13 @@ def fitting(canvas,shapeList):
             if(doublebreak==True):
                 break
         cArray = np.copy(newCanvas)
-        
+        if(log_):
+            print(f"Completed placing {shape.myShape}")
+
     ret = cArray.tolist()
     return(ret)
-        
-            
-                
 
-
-def run(canvas,shapeList):
+def run(canvas,shapeList,log_):
     shapeList=func.sortSurfaceArea(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
@@ -47,4 +44,4 @@ def run(canvas,shapeList):
     # If program passes till here,
     # All the given shapes can be theoretically arranged in the canvas. Practically, I doubt it
     #print(d)
-    return(fitting(canvas,shapeList))
+    return(fitting(canvas,shapeList,log_))
