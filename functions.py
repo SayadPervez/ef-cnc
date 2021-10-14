@@ -85,3 +85,12 @@ def sortSurfaceArea(objectList):
         ret[obj] = obj.surfaceArea
     ret = dict(sorted(ret.items(),key = lambda item:item[1]))
     return(list(ret.keys())[::-1])
+
+def isInterfering(c):
+    x = c.reshape(-1)
+    x = x.tolist()
+    if(sum(i>1 for i in x)>0):
+        return(True)
+    else:
+        return(False)
+

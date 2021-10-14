@@ -1,6 +1,7 @@
 from PIL.Image import new
 import functions as func
 import numpy as np
+from visualization import *
 
 def fitting(canvas,shapeList):
     cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
@@ -8,21 +9,23 @@ def fitting(canvas,shapeList):
     for shape in shapeList:
         sArray = shape.shapeMatrix
         sx,sy = np.shape(sArray)
-        row,col=0,0
+        newCanvas = np.copy(cArray)
         for row in range(0,cx-sx):
             doublebreak=False
             for col in range(0,cy-sy):
-                newCanvas = cArray
+                newCanvas = np.copy(cArray)
                 newCanvas[row:row+sx,col:col+sy]+=sArray
-                if(np.count_nonzero(newCanvas==2)<0):
-                    newCanvas=cArray
+                if(func.isInterfering(newCanvas)):
+                    pass
                 else:
                     doublebreak=True
                     break
             if(doublebreak==True):
                 break
-        cArray = newCanvas
-    return(cArray.tolist())
+        cArray = np.copy(newCanvas)
+        
+    ret = cArray.tolist()
+    return(ret)
         
             
                 
