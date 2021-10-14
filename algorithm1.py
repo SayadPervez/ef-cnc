@@ -14,7 +14,7 @@ def fitting(canvas,shapeList):
             for col in range(0,cy-sy):
                 newCanvas = cArray
                 newCanvas[row:row+sx,col:col+sy]+=sArray
-                if(newCanvas[newCanvas>1].shape[0]):
+                if(np.count_nonzero(newCanvas==2)<0):
                     newCanvas = cArray
                 else:
                     doublebreak=True
