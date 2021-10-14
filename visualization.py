@@ -70,9 +70,11 @@ def rotate(obj,angle):
     """
     Will update later
     """
-    if(obj.myShape=="CANVAS"):
-        raise Exception("CANVAS cannot be rotated")
-    arr = obj.shapeMatrix
+    if("shapes" in str(type(obj))):
+        arr=obj.shapeMatrix
+        if(obj.myShape=="CANVAS"):
+            raise Exception("CANVAS cannot be rotated")
+    arr = obj
     a=np.array(arr,dtype=str)
     a[a=='1']='r'
     l,b=np.shape(a)

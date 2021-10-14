@@ -5,7 +5,7 @@ import algorithm1,algorithm2
 from visualization import *
 from visualization import arr2png as a2p
 
-sq = Square(5)
+sq = Cone(10,2)
 print(sq.shapeFrameDimension)
 a2p(sq).show()
 

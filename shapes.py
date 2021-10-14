@@ -279,7 +279,8 @@ class Cone:
         return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nShape Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
     
     def tilt(self,angle):
-        self.shapeMatrix=rotate(self,angle)
+        self.shapeMatrix=rotate(evenize(self.shapeMatrix),angle)
+        self.shapeFrameDimension = [len(self.shapeMatrix[0]),len(self.shapeMatrix)]
 
     def print(self):
         '''
