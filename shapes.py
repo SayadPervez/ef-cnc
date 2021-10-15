@@ -14,6 +14,7 @@ class Square:
         self.length = side
         self.surfaceArea = side*side
         self.angle = angle
+        self.cornerCompatible = 1
         self.__generateShapeMatrix__(side,angle)
 
     def __repr__(self):
@@ -106,6 +107,7 @@ class Rectangle:
         self.length = length
         self.height = height
         self.angle = angle
+        self.cornerCompatible = 1
         self.surfaceArea = length*height
         self.__generateShapeMatrix__(length,height,angle)
 
@@ -204,6 +206,7 @@ class Circle:
         self.uid = ri(0,1000000000000000000000)
         self.myShape="circle"
         self.radius = radius
+        self.cornerCompatible = 0
         self.surfaceArea = pi*radius*radius
         self.__generateShapeMatrix__(radius)
 
@@ -267,6 +270,7 @@ class Cone:
         self.slantHeight = round((cone_radius**2 + cone_height**2)**0.5)
         self.theta = 2*180*cone_radius/self.slantHeight
         self.surfaceArea = pi*(self.slantHeight**2)*self.theta/360
+        self.cornerCompatible = 0
         #print('theta = ',self.theta)
         if(self.theta>=360):
             raise Exception("Illegal cone dimensions.")
@@ -276,7 +280,7 @@ class Cone:
         self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
 
     def __repr__(self):
-        return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nShape Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
+        return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.cone_radius} mm\nShape Height \t: {self.cone_height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
     
     def tilt(self,angle):
         self.shapeMatrix=rotate(evenize(self.shapeMatrix),angle)

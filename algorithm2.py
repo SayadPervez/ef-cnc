@@ -1,8 +1,78 @@
 import functions as func
 import numpy as np
 
+def fitting(canvas,shapeList,col=True,log_=False):
+    cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
+    cx,cy = np.shape(cArray)
+    if(col==False):
+        for shape in shapeList:
+            sArray = shape.shapeMatrix
+            sx,sy = np.shape(sArray)
+            newCanvas = np.copy(cArray)
+            for row in range(0,cx-sx):
+                doublebreak=False
+                for col in range(0,cy-sy):
+                    newCanvas = np.copy(cArray)
+                    newCanvas[row:row+sx,col:col+sy]+=sArray
+                    if(func.isInterfering(newCanvas)):
+                        pass
+                    else:
+                        doublebreak=True
+                        break
+                if(doublebreak==True):
+                    break
+            cArray = np.copy(newCanvas)
+            if(log_):
+                print(f"Completed placing {shape.myShape}")
+    else:
+        print('me')
+        for shape in shapeList:
+            sArray = shape.shapeMatrix
+            sx,sy = np.shape(sArray)
+            newCanvas = np.copy(cArray)
+            if(shape.cornerCompatible==0):
+                for col in range(0,cy-sy):
+                    doublebreak=False
+                    for row in range(0,cx-sx):
+                        newCanvas = np.copy(cArray)
+                        newCanvas[row:row+sx,col:col+sy]+=sArray
+                        if(func.isInterfering(newCanvas)):
+                            pass
+                        else:
+                            doublebreak=True
+                            break
+                    if(doublebreak==True):
+                        break
+            else:
+                isObjectPlaced = False
+                for row in range(0,cx-sx):
+                    col=0
+                    newCanvas = np.copy(cArray)
+                    newCanvas[row:row+sx,col:col+sy]+=sArray
+                    if(func.isInterfering(newCanvas)):
+                        pass
+                    else:
+                        isObjectPlaced=True
+                        print("row changes")
+                        break
+                if(isObjectPlaced==False):
+                    for col in range(0,cy-sy):
+                        row=0
+                        newCanvas = np.copy(cArray)
+                        newCanvas[row:row+sx,col:col+sy]+=sArray
+                        if(func.isInterfering(newCanvas)):
+                            pass
+                        else:
+                            isObjectPlaced=True
+                            print("col changes")
+                            break
+            cArray = np.copy(newCanvas)
+            if(log_):
+                print(f"Completed placing {shape.myShape}")
+    ret = cArray.tolist()
+    return(ret)
 
-def run(canvas,shapeList,log_):
+def run(canvas,shapeList,col,log_):
     shapeList=func.sortSurfaceArea(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
@@ -19,4 +89,4 @@ def run(canvas,shapeList,log_):
     # If program passes till here,
     # All the given shapes can be theoretically arranged in the canvas. Practically, I doubt it
     #print(d)
-    #return(fitting(canvas,shapeList,log_))
+    return(fitting(canvas,shapeList,col,log_))

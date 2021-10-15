@@ -61,8 +61,6 @@ def singleFit(canvas,objectList):
             returnDict[obj]=(True,0)
         elif (ol <= cl and ob > cb and ob <= cl and ol <= cb) or (ol > cl and ob <= cb and ol <= cb and ob <= cl):
             returnDict[obj]=(True,90)
-        elif (ol<=chypotunes and ob/cb*100<=15 and ol/chypotunes*100<=75) or (ob<=chypotunes and ol/cl*100<=15 and ob/chypotunes*100<=75):
-            returnDict[obj]=(True,45)
         else:
             returnDict[obj]=(False,False)
     return(returnDict,objectList)
@@ -84,6 +82,15 @@ def sortSurfaceArea(objectList):
     for obj in objectList:
         ret[obj] = obj.surfaceArea
     ret = dict(sorted(ret.items(),key = lambda item:item[1]))
+    return(list(ret.keys())[::-1])
+
+def sortEdgeCorners(objectList):
+    if(type(objectList)!=type([])):
+        objectList = [objectList]
+    ret = {}
+    for obj in objectList:
+        ret[obj] = {"sa":obj.surfaceArea,"cc":obj.cornerCompatible}
+    ret = dict(sorted(ret.items(),key = lambda item:item[1]["cc"]))
     return(list(ret.keys())[::-1])
 
 def isInterfering(c):
