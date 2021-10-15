@@ -97,3 +97,15 @@ def rotate(obj,angle):
     rotated = np.array(rotated,dtype=int)
     #rotated=arr2png(rotated,name_="")
     return(rotated.tolist())
+
+def color(shape,color):
+    arr=np.array(shape , dtype=str)
+    arr[arr!='0']=color
+    a=arr.tolist()
+    for i,x in enumerate(a):
+        for j,e in enumerate(x):
+            if e=='0':
+                a[i][j]=0
+            if e=='1':
+                a[i][j]=1
+    return(a)
