@@ -4,9 +4,13 @@ import constants as const
 import algorithm1,algorithm2
 from visualization import *
 from visualization import arr2png as a2p
+import time
 
-x = [Square(25),Circle(8),Rectangle(10,5),Circle(10),Rectangle(30,25),Square(15),Rectangle(40,50)]
+st = time.time()
+x = [Square(25),Circle(8),Rectangle(10,5),Cone(12,15)]
 c = Canvas(100,75)
 
-result = algorithm2.run(c,x,log_=True,col=False)
+result = algorithm2.run(c,x,log_=True,col=True)
+en = time.time()
 a2p(result).show()
+print(en-st)
