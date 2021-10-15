@@ -9,28 +9,100 @@ def fitting(canvas,shapeList,col=True,log_=False):
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
-            for row in range(0,cx-sx):
-                doublebreak=False
-                for col in range(0,cy-sy):
+            if(shape.cornerCompatible==1):
+                isObjectPlaced = False
+                for row in range(0,cx-sx):
+                    col=0
                     newCanvas = np.copy(cArray)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
                     if(func.isInterfering(newCanvas)):
                         pass
                     else:
-                        doublebreak=True
+                        isObjectPlaced=True
+                        #print("row changes")
                         break
-                if(doublebreak==True):
-                    break
+                if(isObjectPlaced==False):
+                    for col in range(0,cy-sy):
+                        row=0
+                        newCanvas = np.copy(cArray)
+                        newCanvas[row:row+sx,col:col+sy]+=sArray
+                        if(func.isInterfering(newCanvas)):
+                            pass
+                        else:
+                            isObjectPlaced=True
+                            #print("col changes")
+                            break
+                if(isObjectPlaced==False):
+                    for row in range(0,cx-sx):
+                        doublebreak=False
+                        for col in range(0,cy-sy):
+                            newCanvas = np.copy(cArray)
+                            newCanvas[row:row+sx,col:col+sy]+=sArray
+                            if(func.isInterfering(newCanvas)):
+                                pass
+                            else:
+                                doublebreak=True
+                                break
+                        if(doublebreak==True):
+                            break
+            else:
+                for row in range(0,cx-sx):
+                    doublebreak=False
+                    for col in range(0,cy-sy):
+                        newCanvas = np.copy(cArray)
+                        newCanvas[row:row+sx,col:col+sy]+=sArray
+                        if(func.isInterfering(newCanvas)):
+                            pass
+                        else:
+                            doublebreak=True
+                            break
+                    if(doublebreak==True):
+                        break
             cArray = np.copy(newCanvas)
             if(log_):
                 print(f"Completed placing {shape.myShape}")
     else:
-        print('me')
         for shape in shapeList:
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
-            if(shape.cornerCompatible==0):
+            if(shape.cornerCompatible==1):
+                isObjectPlaced = False
+                for row in range(0,cx-sx):
+                    col=0
+                    newCanvas = np.copy(cArray)
+                    newCanvas[row:row+sx,col:col+sy]+=sArray
+                    if(func.isInterfering(newCanvas)):
+                        pass
+                    else:
+                        isObjectPlaced=True
+                        #print("row changes")
+                        break
+                if(isObjectPlaced==False):
+                    for col in range(0,cy-sy):
+                        row=0
+                        newCanvas = np.copy(cArray)
+                        newCanvas[row:row+sx,col:col+sy]+=sArray
+                        if(func.isInterfering(newCanvas)):
+                            pass
+                        else:
+                            isObjectPlaced=True
+                            #print("col changes")
+                            break
+                if(isObjectPlaced==False):
+                    for col in range(0,cy-sy):
+                        doublebreak=False
+                        for row in range(0,cx-sx):
+                            newCanvas = np.copy(cArray)
+                            newCanvas[row:row+sx,col:col+sy]+=sArray
+                            if(func.isInterfering(newCanvas)):
+                                pass
+                            else:
+                                doublebreak=True
+                                break
+                        if(doublebreak==True):
+                            break
+            else:
                 for col in range(0,cy-sy):
                     doublebreak=False
                     for row in range(0,cx-sx):
@@ -43,29 +115,6 @@ def fitting(canvas,shapeList,col=True,log_=False):
                             break
                     if(doublebreak==True):
                         break
-            else:
-                isObjectPlaced = False
-                for row in range(0,cx-sx):
-                    col=0
-                    newCanvas = np.copy(cArray)
-                    newCanvas[row:row+sx,col:col+sy]+=sArray
-                    if(func.isInterfering(newCanvas)):
-                        pass
-                    else:
-                        isObjectPlaced=True
-                        print("row changes")
-                        break
-                if(isObjectPlaced==False):
-                    for col in range(0,cy-sy):
-                        row=0
-                        newCanvas = np.copy(cArray)
-                        newCanvas[row:row+sx,col:col+sy]+=sArray
-                        if(func.isInterfering(newCanvas)):
-                            pass
-                        else:
-                            isObjectPlaced=True
-                            print("col changes")
-                            break
             cArray = np.copy(newCanvas)
             if(log_):
                 print(f"Completed placing {shape.myShape}")
