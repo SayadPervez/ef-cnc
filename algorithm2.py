@@ -122,7 +122,7 @@ def fitting(canvas,shapeList,col=True,log_=False):
     return(ret)
 
 def run(canvas,shapeList,col,log_):
-    shapeList=func.sortSurfaceArea(shapeList)
+    shapeList=func.sortEdgeCorners(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
     if(all(l1)==False):
