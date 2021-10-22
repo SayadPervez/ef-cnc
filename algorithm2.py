@@ -126,7 +126,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,col,log_,constCompute=False):
+def run(canvas,shapeList,col=True,log_=False,constCompute=False):
     shapeList=func.sortEdgeCorners(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]

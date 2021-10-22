@@ -35,11 +35,11 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
             for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
-                print("COL --->>>"+str(col))
+                #print("COL --->>>"+str(col))
                 doublebreak=False
                 for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
                     newCanvas = np.copy(cArray)
-                    print(row)
+                    #print(row)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
                     if(func.isInterfering(newCanvas)):
                         pass
