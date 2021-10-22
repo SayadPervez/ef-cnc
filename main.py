@@ -16,7 +16,6 @@ a2p(result).show()
 print(en-st)
 '''
 sq = Rectangle(12,30,45)
-a2p(sq).show()
 out=outline(sq)
 input("Waiting for go ...")
 a2p(out).show()
