@@ -1,5 +1,7 @@
 import numpy as np  
 from PIL import Image as im
+import cv2 as cv
+from constants import *
 
 def arr2png(arr,name_=""):
     if("shapes" in str(type(arr))):
@@ -23,7 +25,11 @@ def arr2png(arr,name_=""):
     #magenta
     ar0[a=='m']=255
     ar2[a=='m']=255
-    
+    #pale black
+    ar0[a=='0.7']=15
+    ar1[a=='0.7']=15
+    ar2[a=='0.7']=15
+
     ar[:,:,0]=ar0
     ar[:,:,1]=ar1
     ar[:,:,2]=ar2
@@ -31,32 +37,37 @@ def arr2png(arr,name_=""):
     if(name_==""):
         img.save('./IMG/img.png')
     else:
-        img.save('./IMG/'+str(name_)+".png")
+        img.save(str(name_)+".png")
     return(img)
 
 def png2arr(img_path):
     img = im.open(img_path)
     ar=np.array(img,dtype='int64')
-    l,b,h=np.shape(ar)
-    a=np.zeros((l,b),dtype=str)
-    ar_avg=np.zeros((l,b),dtype='int64')
-    ar0=ar[:,:,0]
-    ar1=ar[:,:,1]
-    ar2=ar[:,:,2]
-    ar_avg=(ar0+ar1+ar2)//3
-    
-    #red
-    a[ar0==255 ]='r'
-    #blue
-    a[ar2==255]='b'
-    #green
-    a[ar1==255]='g'
-    #white
-    a[ar_avg==255]=0
-    #black
-    a[ar_avg==0]=1
-    #magenta
-    a[ar_avg==170]='m'
+    s=np.shape(ar)
+    a=np.zeros((s[0],s[1]),dtype=str)
+    ar_avg=np.zeros((s[0],s[1]),dtype='int64')
+    if len(s)==3:
+        ar0=ar[:,:,0]
+        ar1=ar[:,:,1]
+        ar2=ar[:,:,2]
+        ar_avg=(ar0+ar1+ar2)//3
+        
+        #red
+        a[ar0==255 ]='r'
+        #blue
+        a[ar2==255]='b'
+        #green
+        a[ar1==255]='g'
+        #white
+        a[ar_avg==255]=0
+        #black
+        a[ar_avg==0]=1
+        #magenta
+        a[ar_avg==170]='m'
+        #pale black
+        a[ar_avg==15]='0.7'
+    if len(s)==2:
+        a[ar==0]='1'   
     a=a.tolist()
     for i,x in enumerate(a):
         for j,e in enumerate(x):
@@ -64,6 +75,8 @@ def png2arr(img_path):
                 a[i][j]=0
             if e=='1':
                 a[i][j]=1
+            if e=='0.7':
+                a[i][j]=0.7
     return(a)
 
 def rotate(obj,angle):
@@ -109,3 +122,61 @@ def color(shape,color):
             if e=='1':
                 a[i][j]=1
     return(a)
+
+def outline_with_shape(shapemat,thick):
+    if("shapes" in str(type(shapemat))):
+        shapemat = shapemat.shapeMatrix
+        thick = thick*sampl
+    a=arr2png(shapemat)
+    a.save("./IMG/a.png")
+    x,y=a.size
+    b=a.resize((x+2*thick+2,y+2*thick+2))
+    b.save("./IMG/b.png")
+    a=png2arr("./IMG/a.png")
+    b=png2arr("./IMG/b.png")
+    x,y=np.shape(np.array(a))
+    j,k=np.shape(np.array(b))
+    l=np.zeros((j+2,k+2),dtype=str)
+    l[l=='']='0'
+    l[ (j-x+2)//2 : x+((j-x+2)//2) ,(k-y+2)//2:y+((k-y+2)//2)]=a
+    m=np.zeros((j+2,k+2),dtype=str)
+    m[m=='']='0'
+    m[1:j+1,1:k+1]=b
+    b=arr2png(m)
+    e=cv.Canny(np.array(b),1,50)
+    e=im.fromarray(e)
+    e.save('./IMG/e.png')
+    e=np.array(png2arr('./IMG/e.png'),dtype=str)
+    e[e=='0']='0.7'
+    e[e=='1']='0'
+    #arr2png(e).show()
+    e[l=='1']='1'
+    #arr2png(e).show()
+    e.tolist()
+    for i,x in enumerate(e):
+        for j,k in enumerate(x):
+            if k=='0':
+                e[i][j]=0
+            if k=='1':
+                e[i][j]=1
+            if k=='0.7':
+                e[i][j]=0.7
+    return(e)
+
+
+def outline(shapemat,thick=0):
+    r=outline_with_shape(shapemat,thick)
+    r=np.array(r,dtype=str)
+    r[r=='1']='0'
+    r[r=='0.7']='1'
+    #arr2png(r).show()
+    r.tolist()
+    for i,x in enumerate(r):
+        for j,k in enumerate(x):
+            if k=='0':
+                r[i][j]=0
+            if k=='1':
+                r[i][j]=1
+            if k=='0.7':
+                r[i][j]=0.7
+    return(r)
