@@ -9,6 +9,10 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
         pass
     elif(type(constCompute)==type(True) and constCompute==True):
         constCompute = 100
+    else:
+        constCompute = 1
+    stepX = ceil(cx/constCompute)
+    stepY = ceil(cy/constCompute)
     if(col==False):
         for shape in shapeList:
             sArray = shape.shapeMatrix
@@ -16,7 +20,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
             newCanvas = np.copy(cArray)
             if(shape.cornerCompatible==1):
                 isObjectPlaced = False
-                for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                for row in range(0,cx-sx,stepX):
                     col=0
                     newCanvas = np.copy(cArray)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
@@ -27,7 +31,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         #print("row changes")
                         break
                 if(isObjectPlaced==False):
-                    for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                    for col in range(0,cy-sy,stepY):
                         row=0
                         newCanvas = np.copy(cArray)
                         newCanvas[row:row+sx,col:col+sy]+=sArray
@@ -38,9 +42,9 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                             #print("col changes")
                             break
                 if(isObjectPlaced==False):
-                    for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                    for row in range(0,cx-sx,stepX):
                         doublebreak=False
-                        for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                        for col in range(0,cy-sy,stepY):
                             newCanvas = np.copy(cArray)
                             newCanvas[row:row+sx,col:col+sy]+=sArray
                             if(func.isInterfering(newCanvas)):
@@ -51,9 +55,9 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         if(doublebreak==True):
                             break
             else:
-                for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                for row in range(0,cx-sx,stepX):
                     doublebreak=False
-                    for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                    for col in range(0,cy-sy,stepY):
                         newCanvas = np.copy(cArray)
                         newCanvas[row:row+sx,col:col+sy]+=sArray
                         if(func.isInterfering(newCanvas)):
@@ -73,7 +77,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
             newCanvas = np.copy(cArray)
             if(shape.cornerCompatible==1):
                 isObjectPlaced = False
-                for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                for row in range(0,cx-sx,stepX):
                     col=0
                     newCanvas = np.copy(cArray)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
@@ -84,7 +88,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         #print("row changes")
                         break
                 if(isObjectPlaced==False):
-                    for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                    for col in range(0,cy-sy,stepY):
                         row=0
                         newCanvas = np.copy(cArray)
                         newCanvas[row:row+sx,col:col+sy]+=sArray
@@ -95,9 +99,9 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                             #print("col changes")
                             break
                 if(isObjectPlaced==False):
-                    for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                    for col in range(0,cy-sy,stepY):
                         doublebreak=False
-                        for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                        for row in range(0,cx-sx,stepX):
                             newCanvas = np.copy(cArray)
                             newCanvas[row:row+sx,col:col+sy]+=sArray
                             if(func.isInterfering(newCanvas)):
@@ -108,9 +112,9 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         if(doublebreak==True):
                             break
             else:
-                for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                for col in range(0,cy-sy,stepY):
                     doublebreak=False
-                    for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                    for row in range(0,cx-sx,stepX):
                         newCanvas = np.copy(cArray)
                         newCanvas[row:row+sx,col:col+sy]+=sArray
                         if(func.isInterfering(newCanvas)):

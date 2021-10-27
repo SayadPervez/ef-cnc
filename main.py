@@ -5,7 +5,3 @@ import algorithm1,algorithm2
 from visualization import *
 from visualization import arr2png as a2p
 import time
-import standard as std
-
-
-
