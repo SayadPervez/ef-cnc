@@ -9,6 +9,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
         constCompute = 100
     cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
     cx,cy = np.shape(cArray)
+    memoryX = 0
+    memoryY = 0
     if(col==False):
         for shape in shapeList:
             sArray = shape.shapeMatrix
@@ -17,12 +19,16 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
             for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
                 doublebreak=False
                 for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                    if(row<memoryX and col<memoryY):
+                        continue
                     newCanvas = np.copy(cArray)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
                     if(func.isInterfering(newCanvas)):
                         pass
                     else:
                         doublebreak=True
+                        memoryX=row
+                        memoryY=col
                         break
                 if(doublebreak==True):
                     break
@@ -38,6 +44,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                 #print("COL --->>>"+str(col))
                 doublebreak=False
                 for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                    if(row<memoryX and col<memoryY):
+                        continue
                     newCanvas = np.copy(cArray)
                     #print(row)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
@@ -45,6 +53,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         doublebreak=True
+                        memoryX=row
+                        memoryY=col
                         break
                 if(doublebreak==True):
                     break

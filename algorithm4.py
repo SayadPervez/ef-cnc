@@ -1,7 +1,6 @@
 import functions as func
 import numpy as np
 from math import ceil
-from visualization import arr2png as a2p
 
 def fitting(canvas,shapeList,log_=False,constCompute=False):
     cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
