@@ -1,6 +1,7 @@
 import functions as func
 import numpy as np
 from math import ceil
+from visualization import arr2png as a2p
 
 def fitting(canvas,shapeList,log_=False,constCompute=False):
     cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
@@ -13,10 +14,75 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
         constCompute = 1
     stepX = ceil(cx/constCompute)
     stepY = ceil(cy/constCompute)
-    pass
+    for shape in shapeList:
+        sArray = shape.shapeMatrix
+        sx,sy = np.shape(sArray)
+        newCanvas = np.copy(cArray)
+        isObjectPlaced=False
+        for row in range(0,cx-sx,stepX):
+            col=0
+            newCanvas = np.copy(cArray)
+            newCanvas[row:row+sx,col:col+sy]+=sArray
+            if(func.isInterfering(newCanvas)):
+                pass
+            else:
+                isObjectPlaced=True
+                #print("choice 1")
+                break
+        if(isObjectPlaced==False):
+            for col in range(0,cy-sy,stepY):
+                row=0
+                newCanvas = np.copy(cArray)
+                newCanvas[row:row+sx,col:col+sy]+=sArray
+                if(func.isInterfering(newCanvas)):
+                    pass
+                else:
+                    isObjectPlaced=True
+                    #print("choice 2")
+                    break
+        if(isObjectPlaced==False):
+            for row in range(0,cx-sx,stepX):
+                col=cy-sy
+                newCanvas = np.copy(cArray)
+                newCanvas[row:row+sx,col:col+sy]+=sArray
+                if(func.isInterfering(newCanvas)):
+                    pass
+                else:
+                    isObjectPlaced=True
+                    #print("choice 3")
+                    break
+        if(isObjectPlaced==False):
+            for col in range(0,cy-sy,stepY):
+                row=cx-sx
+                newCanvas = np.copy(cArray)
+                newCanvas[row:row+sx,col:col+sy]+=sArray
+                if(func.isInterfering(newCanvas)):
+                    pass
+                else:
+                    isObjectPlaced=True
+                    #print("choice 4")
+                    break
+        if(isObjectPlaced==False):
+            for col in range(0,cy-sy,stepY):
+                doublebreak=False
+                for row in range(0,cx-sx,stepX):
+                    newCanvas = np.copy(cArray)
+                    newCanvas[row:row+sx,col:col+sy]+=sArray
+                    if(func.isInterfering(newCanvas)):
+                        pass
+                    else:
+                        doublebreak=True
+                        break
+                if(doublebreak==True):
+                    break
+        cArray = np.copy(newCanvas)
+        if(log_):
+            print(f"Completed placing {shape.myShape}")
+    ret = cArray.tolist()
+    return(ret)
 
 def run(canvas,shapeList,log_=False,constCompute=False):
-    shapeList=func.sortEdgeCorners(shapeList)
+    shapeList=func.sortSurfaceArea(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
     if(all(l1)==False):
