@@ -27,8 +27,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         doublebreak=True
-                        memoryX=row
-                        memoryY=col
+                        memoryX=row+(75/100*sx)
+                        memoryY=col+(75/100*sy)
                         break
                 if(doublebreak==True):
                     break
@@ -53,8 +53,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         doublebreak=True
-                        memoryX=row
-                        memoryY=col
+                        memoryX=row+(75/100*sx)
+                        memoryY=col+(75/100*sy)
                         break
                 if(doublebreak==True):
                     break
@@ -64,8 +64,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False):
-    if(timeComplexity):
+def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=True):
+    if(timeComplexity or memory_==True):
         shapeList=func.sortSurfaceArea(shapeList)[::-1]
     else:
         shapeList=func.sortSurfaceArea(shapeList)

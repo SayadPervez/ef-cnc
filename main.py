@@ -6,9 +6,9 @@ from visualization import *
 from visualization import arr2png as a2p
 import time
 
-shapeList = [Circle(5),Circle(5),Circle(5),Circle(5),Circle(5),Circle(5),Circle(5)]
+shapeList = [Square(38),Rectangle(5,15)]
 c = Canvas(50,50)
 s = time.time()
-result = algorithm1.run(c,shapeList,log_=True,constCompute=75)
+result = algorithm1.run(c,shapeList,log_=True,constCompute=75,memory_=False)
 print(time.time()-s)
 a2p(result).show()
