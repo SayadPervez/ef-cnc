@@ -280,7 +280,7 @@ class Cone:
             raise Exception("Illegal cone dimensions.")
             return(0)
         self.cone_type = 1 if self.theta<=180 else 2
-        self.triangleCompatible = 2 if self.cone_type==1 else 1
+        self.triangleCompatible = 3 if self.cone_type==1 else 2
         #print('Cone type : ',self.cone_type)
         self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
 
@@ -292,7 +292,10 @@ class Cone:
         self.shapeFrameDimension = [len(self.shapeMatrix[0]),len(self.shapeMatrix)]
 
     def flaTilt(self,direction=1):
-        self.tilt((direction/abs(direction))*self.flatAngle)
+        if(self.cone_type==1):
+            self.tilt((direction/abs(direction))*self.flatAngle)
+        else:
+            self.tilt(180)
 
     def print(self):
         '''

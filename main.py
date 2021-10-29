@@ -15,8 +15,13 @@ print(time.time()-s)
 a2p(result).show()
 '''
 
-cn = Cone(20,8)
-cn.displayShape()
-input("....")
-cn.flaTilt(-5)
-cn.displayShape()
+shapeList = [Square(38),Rectangle(5,15),Cone(20,8),Cone(25,10),Cone(20,12),Circle(10)]
+sortedShapeList = triangleSort(shapeList)
+coneCount = countShapes(sortedShapeList,'cone')
+ones = [(-1)**i for i in range(coneCount)]
+for q in range(coneCount):
+    sortedShapeList[q].flaTilt(ones[q])
+
+for _ in sortedShapeList:
+    _.displayShape()
+    input("...")

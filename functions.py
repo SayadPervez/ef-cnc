@@ -107,3 +107,12 @@ def countShapes(shapeList,myShapeName):
     '''
     x = [_.myShape for _ in shapeList]
     return(x.count(myShapeName))
+
+def triangleSort(objectList):
+    if(type(objectList)!=type([])):
+        objectList = [objectList]
+    ret = {}
+    for obj in objectList:
+        ret[obj] = {"sa":obj.surfaceArea,"cc":obj.triangleCompatible}
+    ret = dict(sorted(ret.items(),key = lambda item:item[1]["cc"]))
+    return(list(ret.keys())[::-1])
