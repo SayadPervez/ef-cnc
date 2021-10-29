@@ -27,8 +27,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         doublebreak=True
-                        memoryX=row+(75/100*sx)
-                        memoryY=col+(75/100*sy)
+                        memoryX=row+(71/100*sx)
+                        memoryY=col+(71/100*sy)
                         break
                 if(doublebreak==True):
                     break
@@ -53,8 +53,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         doublebreak=True
-                        memoryX=row+(75/100*sx)
-                        memoryY=col+(75/100*sy)
+                        memoryX=row+(71/100*sx)
+                        memoryY=col+(71/100*sy)
                         break
                 if(doublebreak==True):
                     break
