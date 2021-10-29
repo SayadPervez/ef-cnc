@@ -101,3 +101,9 @@ def isInterfering(c):
     else:
         return(False)
 
+def countShapes(shapeList,myShapeName):
+    '''
+    count the given type of shape in a given shapeList
+    '''
+    x = [_.myShape for _ in shapeList]
+    return(x.count(myShapeName))
