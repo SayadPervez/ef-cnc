@@ -1,6 +1,6 @@
 from functions import *
 import constants as const
-import algorithm1,algorithm2
+import algorithm1,algorithm2,algorithm3,algorithm4
 from visualization import *
 from visualization import arr2png as a2p
 import time
@@ -85,7 +85,7 @@ def alg2Small():
     c = canvas
     li = shapes
     print("Starting algorithm")
-    out = algorithm2.run(c,li,log_=True,constCompute=100)
+    out = algorithm3.run(c,li,log_=True,constCompute=100)
     e = time.time()
     a2p(out).show()
     print(f"Time taken : {e-s} seconds")

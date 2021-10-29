@@ -64,11 +64,12 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=True):
-    if(timeComplexity or memory_==True):
-        shapeList=func.sortSurfaceArea(shapeList)[::-1]
-    else:
-        shapeList=func.sortSurfaceArea(shapeList)
+def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=True,noSort=False):
+    if(noSort==False):
+        if(timeComplexity or memory_==True):
+            shapeList=func.sortSurfaceArea(shapeList)[::-1]
+        else:
+            shapeList=func.sortSurfaceArea(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
     if(all(l1)==False):

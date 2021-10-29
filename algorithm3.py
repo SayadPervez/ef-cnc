@@ -1,9 +1,5 @@
 import functions as func
-import numpy as np
-from math import ceil
-
-def fitting(canvas,shapeList,log_=False,constCompute=False):
-    pass
+import algorithm1
 
 def run(canvas,shapeList,log_=False,constCompute=False):
     shapeList=func.triangleSort(shapeList)
@@ -26,4 +22,4 @@ def run(canvas,shapeList,log_=False,constCompute=False):
     ones = [(-1)**i for i in range(coneCount)]
     for q in range(coneCount):
         shapeList[q].flaTilt(ones[q])
-    return(fitting(canvas,shapeList,log_,constCompute))
+    return(algorithm1.run(canvas,shapeList,log_,constCompute,noSort=True))
