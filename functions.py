@@ -33,19 +33,19 @@ def evenize(a2dlist):
     i,j = len(a2dlist),len(a2dlist[0])
     if(i%2==0 and j%2==0):
         return(a2dlist)
-    elif(i%2!=0):
+    if(i%2!=0):
         # if number of rows (height) is not even
         min_index = min([sum(_) for _ in a2dlist])
         del(a2dlist[min_index])
-        return(a2dlist)
-    else:
+        ret=a2dlist
+    if(j%2!=0):
         # if number of cols (width) is not even
         a = a2dlist.copy()
         x = np.array(a).T.tolist()
         min_index = min([sum(_) for _ in x])
         del(x[min_index])
-        x = np.array(x).T.tolist()
-        return(x)
+        ret = np.array(x).T.tolist()
+    return(ret)
 
 def singleFit(canvas,objectList):
     returnDict = {}
