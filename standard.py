@@ -27,7 +27,7 @@ def alg1Large():
     print("Starting algorithm")
     out = algorithm1.run(c,li,log_=True,constCompute=10)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -47,7 +47,7 @@ def alg1Small():
     print("Starting algorithm")
     out = algorithm1.run(c,li,log_=True,constCompute=100)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -67,7 +67,7 @@ def alg2Large():
     print("Starting algorithm")
     out = algorithm2.run(c,li,log_=True,constCompute=10)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -88,7 +88,7 @@ def alg2Small():
     out = algorithm2.run(c,li,log_=True,constCompute=100)
     #out = imgTrim(out)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -108,7 +108,7 @@ def alg3Large():
     print("Starting algorithm")
     out = algorithm3.run(c,li,log_=True,constCompute=10)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -128,7 +128,7 @@ def alg3Small():
     print("Starting algorithm")
     out = algorithm3.run(c,li,log_=True,constCompute=100)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -148,7 +148,7 @@ def alg4Large():
     print("Starting algorithm")
     out = algorithm4.run(c,li,log_=True,constCompute=10)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -169,7 +169,7 @@ def alg4Small():
     out = algorithm4.run(c,li,log_=True,constCompute=100)
     #out = imgTrim(out)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -200,3 +200,4 @@ def RUN():
     plt.show()
 
 RUN()
+#alg2Large()

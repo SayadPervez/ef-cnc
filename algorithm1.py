@@ -7,8 +7,12 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
         pass
     elif(type(constCompute)==type(True) and constCompute==True):
         constCompute = 100
+    else:
+        constCompute = 1
     cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
     cx,cy = np.shape(cArray)
+    stepX = ceil(cx/constCompute)
+    stepY = ceil(cy/constCompute)
     memoryX = 0
     memoryY = 0
     if(col==False):
@@ -16,9 +20,9 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
-            for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+            for row in range(0,cx-sx,stepX):
                 doublebreak=False
-                for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+                for col in range(0,cy-sy,stepY):
                     if(row<memoryX and col<memoryY):
                         continue
                     newCanvas = np.copy(cArray)
@@ -40,10 +44,10 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
-            for col in range(0,cy-sy,ceil(cy/constCompute) if constCompute else 1):
+            for col in range(0,cy-sy,stepY):
                 #print("COL --->>>"+str(col))
                 doublebreak=False
-                for row in range(0,cx-sx,ceil(cx/constCompute) if constCompute else 1):
+                for row in range(0,cx-sx,stepX):
                     if(row<memoryX and col<memoryY):
                         continue
                     newCanvas = np.copy(cArray)
