@@ -47,6 +47,19 @@ def evenize(a2dlist):
         ret = np.array(x).T.tolist()
     return(ret)
 
+def imgTrim(canva):
+    if("shapes" in str(type(canva))):
+        canva=canva.shapeMatrix
+    r=np.array(canva,dtype=int)
+    res=np.where(r==1)
+    top=min(res[1])
+    bottom=max(res[1])
+    right=max(res[0])
+    left=min(res[0])
+    rotated=r[left:right+1,top:bottom+1]
+    rotated = np.array(rotated,dtype=int)
+    return(rotated.tolist())
+
 def singleFit(canvas,objectList):
     returnDict = {}
     if(type(objectList)!=type([])):

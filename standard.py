@@ -75,8 +75,8 @@ def alg2Small():
     print("\na2-S starting:")
     canvas = Canvas(108,72)
     shapes    = [ 
-                Square(40) ,
-                Rectangle(100,25) , 
+                Square(20) ,
+                Rectangle(10,25) , 
                 Circle(7) ,
                 Cone(17,20) ,
                 Cone(12,4)
@@ -85,7 +85,8 @@ def alg2Small():
     c = canvas
     li = shapes
     print("Starting algorithm")
-    out = algorithm3.run(c,li,log_=True,constCompute=100)
+    out = algorithm1.run(c,li,log_=True,constCompute=100)
+    out = imgTrim(out)
     e = time.time()
     a2p(out).show()
     print(f"Time taken : {e-s} seconds")
