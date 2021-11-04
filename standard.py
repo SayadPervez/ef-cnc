@@ -88,7 +88,7 @@ def alg2Small():
     out = algorithm2.run(c,li,log_=True,constCompute=100)
     #out = imgTrim(out)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
@@ -169,7 +169,7 @@ def alg4Small():
     out = algorithm4.run(c,li,log_=True,constCompute=100)
     #out = imgTrim(out)
     e = time.time()
-    a2p(out).show()
+    #a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
