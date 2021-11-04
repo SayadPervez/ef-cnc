@@ -15,10 +15,10 @@ def alg1Large():
     print("\na1-L starting:")
     canvasLarge = Canvas(1080,720)
     shapesLarge = [ 
-                Square(70) ,
-                Rectangle(100,50) , 
-                Circle(50) ,
-                Cone(120,150) ,
+                Square(200) ,
+                Rectangle(100,250) , 
+                Circle(70) ,
+                Cone(170,200) ,
                 Cone(120,40)
             ]
     s = time.time()
@@ -35,10 +35,10 @@ def alg1Small():
     print("\na1-S starting:")
     canvas = Canvas(108,72)
     shapes    = [ 
-                Square(7) ,
-                Rectangle(10,5) , 
-                Circle(5) ,
-                Cone(12,15) ,
+                Square(20) ,
+                Rectangle(10,25) , 
+                Circle(7) ,
+                Cone(17,20) ,
                 Cone(12,4)
             ]
     s = time.time()
@@ -55,10 +55,10 @@ def alg2Large():
     print("\na2-L starting:")
     canvasLarge = Canvas(1080,720)
     shapesLarge = [ 
-                Square(70) ,
-                Rectangle(100,50) , 
-                Circle(50) ,
-                Cone(120,150) ,
+                Square(200) ,
+                Rectangle(100,250) , 
+                Circle(70) ,
+                Cone(170,200) ,
                 Cone(120,40)
             ]
     s = time.time()
@@ -85,24 +85,107 @@ def alg2Small():
     c = canvas
     li = shapes
     print("Starting algorithm")
-    out = algorithm1.run(c,li,log_=True,constCompute=100)
-    out = imgTrim(out)
+    out = algorithm2.run(c,li,log_=True,constCompute=100)
+    #out = imgTrim(out)
+    e = time.time()
+    a2p(out).show()
+    print(f"Time taken : {e-s} seconds")
+    return(e-s)
+
+def alg3Large():
+    print("\na3-L starting:")
+    canvasLarge = Canvas(1080,720)
+    shapesLarge = [ 
+                Square(200) ,
+                Rectangle(100,250) , 
+                Circle(70) ,
+                Cone(170,200) ,
+                Cone(120,40)
+            ]
+    s = time.time()
+    c = canvasLarge
+    li = shapesLarge
+    print("Starting algorithm")
+    out = algorithm3.run(c,li,log_=True,constCompute=10)
+    e = time.time()
+    #a2p(out).show()
+    print(f"Time taken : {e-s} seconds")
+    return(e-s)
+
+def alg3Small():
+    print("\na3-S starting:")
+    canvas = Canvas(108,72)
+    shapes    = [ 
+                Square(20) ,
+                Rectangle(10,25) , 
+                Circle(7) ,
+                Cone(17,20) ,
+                Cone(12,4)
+            ]
+    s = time.time()
+    c = canvas
+    li = shapes
+    print("Starting algorithm")
+    out = algorithm3.run(c,li,log_=True,constCompute=100)
+    e = time.time()
+    #a2p(out).show()
+    print(f"Time taken : {e-s} seconds")
+    return(e-s)
+
+def alg4Large():
+    print("\na4-L starting:")
+    canvasLarge = Canvas(1080,720)
+    shapesLarge = [ 
+                Square(200) ,
+                Rectangle(100,250) , 
+                Circle(70) ,
+                Cone(170,200) ,
+                Cone(120,40)
+            ]
+    s = time.time()
+    c = canvasLarge
+    li = shapesLarge
+    print("Starting algorithm")
+    out = algorithm4.run(c,li,log_=True,constCompute=10)
+    e = time.time()
+    #a2p(out).show()
+    print(f"Time taken : {e-s} seconds")
+    return(e-s)
+
+def alg4Small():
+    print("\na4-S starting:")
+    canvas = Canvas(108,72)
+    shapes    = [ 
+                Square(20) ,
+                Rectangle(10,25) , 
+                Circle(7) ,
+                Cone(17,20) ,
+                Cone(12,4)
+            ]
+    s = time.time()
+    c = canvas
+    li = shapes
+    print("Starting algorithm")
+    out = algorithm4.run(c,li,log_=True,constCompute=100)
+    #out = imgTrim(out)
     e = time.time()
     a2p(out).show()
     print(f"Time taken : {e-s} seconds")
     return(e-s)
 
 def RUN():
-    x = ['a1-S','a2-S','a1-L','a2-L']
+    x = ['a1-S','a2-S','a3-S','a4-S','a1-L','a2-L','a3-L','a4-L']
     y = []
-    #y.append(alg1Small())
+    y.append(alg1Small())
     y.append(alg2Small())
-    print(y[0])
-    return("")
-    #y.append(alg1Large())
-    #y.append(alg2Large())
+    y.append(alg3Small())
+    y.append(alg4Small())
+    y.append(alg1Large())
+    y.append(alg2Large())
+    y.append(alg3Large())
+    y.append(alg4Large())
     print("Plotting ...")
-    plt.bar(x, height=y, alpha=0.8 , color=['red','green','red','green'])
+    plt.bar(x, height=y, alpha=0.8 , color=['green','green','green','green','red','red','red','red'])
     plt.title("Algorithm Comparison for Small and Large Canvas")
     plt.xlabel("Algorithms")
     plt.ylabel("Time taken")
