@@ -1,15 +1,25 @@
 from functions import *
-from shapes import Rectangle, Square
+from shapes import *
+import algorithm1,algorithm2,algorithm3,algorithm4
 import constants as cont
 from visualization import *
 
-sq = Rectangle(50,20,90)
 
-initialShapeArray = sq.shapeMatrix
-print(type(initialShapeArray))
-image = arr2png(initialShapeArray,name_="") 
-ret_array = png2arr("./IMG/img.png")
-print(type(ret_array))
-print(len(ret_array),len(ret_array[0]))
-print(sq.shapeFrameDimension)
-print(initialShapeArray==ret_array)
+print("\na1-S starting:")
+canvas = Canvas(108,72)
+shapes    = [ 
+            Square(20) ,
+            Rectangle(10,25) , 
+            Circle(7) ,
+            Cone(17,20) ,
+            Cone(12,4)
+        ]
+c = canvas
+li = shapes
+print("Starting algorithm1")
+out = algorithm1.run(c,li,log_=True,constCompute=100)
+arr2png(free_surface_12(out)).show()
+
+print("Starting algorithm3")
+out = algorithm3.run(c,li,log_=True,constCompute=100)
+arr2png(free_surface_34(out)).show()

@@ -180,3 +180,47 @@ def outline(shapemat,thick=0):
             if k=='0.7':
                 r[i][j]=0.7
     return(r)
+
+def free_surface_12(canvas_array):
+    a=np.array(canvas_array,dtype=int)
+    a1=np.array(canvas_array,dtype=str)
+    l,b=np.shape(a)
+    a_v=sum(a)
+    a_h=sum(np.transpose(a))
+    res1=np.where(a_v==0)
+    res2=np.where(a_h==0)
+    a1[:,res1]='b'
+    a1[res2,:]='b'
+    return(a1)
+
+def free_surface_34(canvas_array):
+    a=np.array(canvas_array,dtype=int)
+    a1=np.array(canvas_array,dtype=str)
+    k,o=np.shape(a)
+    a_v=sum(a)
+    a_h=sum(np.transpose(a))
+    v=[5,10,20,30,40,50,60,70,80,90,100]
+    s=np.zeros((101,101),int)
+    for i in v:
+        for j in v: 
+            l1=np.array(np.where(a_h<(np.max(a_h)*i//100 )),dtype=int)
+            b1=np.array(np.where(a_v<(np.max(a_v)*j//100)), dtype=int)
+            l1.tolist()
+            b1.tolist()
+            top=l1[0][len(l1[0])*8//100] if l1!=[] else 0
+            bottom=l1[0][len(l1[0])-len(l1[0])*8//100-1] if l1!=[] else k-1
+            left=b1[0][len(b1[0])*8//100] if b1!=[] else 0
+            right=b1[0][len(b1[0])-len(b1[0])*8//100-1]  if b1!=[] else o-1
+            if np.sum(a[top:bottom+1,left:right+1])==0:
+                l,b=np.shape(a[top:bottom+1,left:right+1])
+                s[i][j]=l*b
+    
+    i,j=np.where(s==np.max(s))
+    l1=np.array(np.where(a_h<(np.max(a_h)*i[0]//100 )),dtype=int)
+    b1=np.array(np.where(a_v<(np.max(a_v)*j[0]//100)), dtype=int)
+    top=l1[0][len(l1[0])*8//100]
+    bottom=l1[0][len(l1[0])-len(l1[0])*8//100-1]
+    left=b1[0][len(b1[0])*8//100]
+    right=b1[0][len(b1[0])-len(b1[0])*8//100-1]
+    a1[top:bottom+1,left:right+1]='b'
+    return(a1)
