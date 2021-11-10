@@ -4,7 +4,6 @@ import algorithm1,algorithm2,algorithm3,algorithm4
 import constants as cont
 from visualization import *
 
-'''
 print("\na1-S starting:")
 canvas = Canvas(108,72)
 shapes    = [ 
@@ -17,9 +16,17 @@ shapes    = [
 c = canvas
 li = shapes
 print("Starting algorithm1")
-out = algorithm1.run(c,li,log_=True,constCompute=100)
-arr2png(free_surface_12(out)).show()
-'''
+out = algorithm1.run(c,li,log_=True,constCompute=75)
+arr2png(out).show()
+input("Press ENTER to continue ...")
+out = free_surface_12(out)
+arr2png(out).show()
+#input("Press ENTER to continue ...")
+#arr2png(free_surface_34(out)).show()
+input("Press ENTER to continue ...")
+pieChart(free_surface_area(out))
+
+input("Start next algorithm ?")
 
 canvas = Canvas(108,108)
 shapes    = [ 
@@ -35,9 +42,7 @@ shapes    = [
 c = canvas
 li = shapes
 print("Starting algorithm3")
-out = algorithm3.run(c,li,log_=True,constCompute=100)
+out = algorithm3.run(c,li,log_=True,constCompute=75)
 arr2png(out).show()
 input("Press ENTER to continue ...")
 arr2png(free_surface_12(out)).show()
-input("Press ENTER to continue ...")
-arr2png(free_surface_34(out)).show()

@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image as im
 import cv2 as cv
 from constants import *
+import matplotlib.pyplot as plt
 
 def arr2png(arr,name_=""):
     if("shapes" in str(type(arr))):
@@ -224,3 +225,19 @@ def free_surface_34(canvas_array):
     right=b1[0][len(b1[0])-len(b1[0])*8//100-1]
     a1[top:bottom+1,left:right+1]='b'
     return(a1)
+
+def pieChart(li):
+    li[0],li[2] = li[2],li[0]
+    mylabels = ["Wastage","Re-usable","Shapes"]
+    myexplode = [0, 0.2, 0]
+    mycolors=['#b0bec5','#f50057','#0d47a1']
+    plt.pie(li, labels = mylabels, explode = myexplode, colors=mycolors,startangle = 210,autopct='%1.0f%%')
+    plt.title("Canvas Efficiency Chart")
+    plt.show() 
+
+def free_surface_area(canvas):
+    a=np.array(canvas,str)
+    w=len(np.where(a=='0')[0])
+    b=len(np.where(a=='1')[0])
+    bl=len(np.where(a=='b')[0])
+    return([b,bl,w])

@@ -68,9 +68,9 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=True,noSort=False):
+def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=False,noSort=False):
     if(noSort==False):
-        if(timeComplexity or memory_==True):
+        if(timeComplexity==True or memory_==True):
             shapeList=func.sortSurfaceArea(shapeList)[::-1]
         else:
             shapeList=func.sortSurfaceArea(shapeList)
