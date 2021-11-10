@@ -37,7 +37,7 @@ shapes    = [
         ]
 c = canvas
 li = shapes
-print("Starting algorithm1")
+print("Starting algorithm2")
 out = algorithm2.run(c,li,log_=True,constCompute=50)
 arr2png(out).show()
 input("Press ENTER to continue ...")
@@ -81,7 +81,7 @@ shapes    = [
         ]
 c = canvas
 li = shapes
-print("Starting algorithm1")
+print("Starting algorithm4")
 out = algorithm4.run(c,li,log_=True,constCompute=75)
 arr2png(out).show()
 input("Press ENTER to continue ...")
