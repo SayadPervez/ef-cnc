@@ -190,16 +190,29 @@ def free_surface_12(canvas_array):
     a_h=sum(np.transpose(a))
     res1=np.where(a_v==0)
     res2=np.where(a_h==0)
-    a1[:,res1]='b'
-    a1[res2,:]='b'
+    l1=np.array(np.where(a_h<(np.max(a_h)*50//100 )),dtype=int)
+    b1=np.array(np.where(a_v<(np.max(a_v)*20//100)), dtype=int)
+    l1.tolist()
+    b1.tolist()
+    top=l1[0][len(l1[0])*7//100]       
+    bottom=l1[0][len(l1[0])-len(l1[0])*13//100-1] 
+    left=b1[0][len(b1[0])*13//100] 
+    right=b1[0][len(b1[0])-len(b1[0])*13//100-1]  
+    a1[top:bottom+1,left:right+1]='b'
+    
     return(a1)
 
-def free_surface_34(canvas_array):
+def free_surface_34(canvas_array,konst):
+    p=q=r=e=konst
     a=np.array(canvas_array,dtype=int)
     a1=np.array(canvas_array,dtype=str)
     k,o=np.shape(a)
     a_v=sum(a)
     a_h=sum(np.transpose(a))
+    res1=np.where(a_v==0)
+    res2=np.where(a_h==0)
+    a1[:,res1]='b'
+    a1[res2,:]='b'
     v=[5,10,20,30,40,50,60,70,80,90,100]
     s=np.zeros((101,101),int)
     for i in v:
@@ -208,23 +221,31 @@ def free_surface_34(canvas_array):
             b1=np.array(np.where(a_v<(np.max(a_v)*j//100)), dtype=int)
             l1.tolist()
             b1.tolist()
-            top=l1[0][len(l1[0])*8//100] if l1!=[] else 0
-            bottom=l1[0][len(l1[0])-len(l1[0])*8//100-1] if l1!=[] else k-1
-            left=b1[0][len(b1[0])*8//100] if b1!=[] else 0
-            right=b1[0][len(b1[0])-len(b1[0])*8//100-1]  if b1!=[] else o-1
-            if np.sum(a[top:bottom+1,left:right+1])==0:
-                l,b=np.shape(a[top:bottom+1,left:right+1])
-                s[i][j]=l*b
+            if l1!=[]:
+                top=l1[0][len(l1[0])*p//100]       
+                bottom=l1[0][len(l1[0])-len(l1[0])*q//100-1] 
+                left=b1[0][len(b1[0])*r//100]
+                right=b1[0][len(b1[0])-len(b1[0])*e//100-1]  
+                if np.sum(a[top:bottom+1,left:right+1])==0:
+                    l,b=np.shape(a[top:bottom+1,left:right+1])
+                    s[i][j]=l*b
     
     i,j=np.where(s==np.max(s))
     l1=np.array(np.where(a_h<(np.max(a_h)*i[0]//100 )),dtype=int)
     b1=np.array(np.where(a_v<(np.max(a_v)*j[0]//100)), dtype=int)
-    top=l1[0][len(l1[0])*8//100]
-    bottom=l1[0][len(l1[0])-len(l1[0])*8//100-1]
-    left=b1[0][len(b1[0])*8//100]
-    right=b1[0][len(b1[0])-len(b1[0])*8//100-1]
+    top=l1[0][len(l1[0])*p//100]
+    bottom=l1[0][len(l1[0])-len(l1[0])*q//100-1]
+    left=b1[0][len(b1[0])*r//100]
+    right=b1[0][len(b1[0])-len(b1[0])*e//100-1]
     a1[top:bottom+1,left:right+1]='b'
     return(a1)
+
+def free_surface_area(canvas):
+    a=np.array(canvas,str)
+    w=len(np.where(a=='0')[0])
+    b=len(np.where(a=='1')[0])
+    bl=len(np.where(a=='b')[0])
+    return([b,bl,w])
 
 def pieChart(li):
     li[0],li[2] = li[2],li[0]
@@ -234,10 +255,3 @@ def pieChart(li):
     plt.pie(li, labels = mylabels, explode = myexplode, colors=mycolors,startangle = 210,autopct='%1.0f%%')
     plt.title("Canvas Efficiency Chart")
     plt.show() 
-
-def free_surface_area(canvas):
-    a=np.array(canvas,str)
-    w=len(np.where(a=='0')[0])
-    b=len(np.where(a=='1')[0])
-    bl=len(np.where(a=='b')[0])
-    return([b,bl,w])
