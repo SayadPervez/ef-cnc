@@ -129,3 +129,33 @@ def triangleSort(objectList):
         ret[obj] = {"sa":obj.surfaceArea,"cc":obj.triangleCompatible}
     ret = dict(sorted(ret.items(),key = lambda item:item[1]["cc"]))
     return(list(ret.keys())[::-1])
+
+def typeToggle(li):
+    retli=[]
+    for _ in li:
+        try:
+            retli.append(int(_))
+        except Exception as e:
+            retli.append(_)
+    return(retli)
+
+def liCompress(li):
+    retli = [[str(li[0]),1]]
+    for i in range(1,len(li)):
+        if(str(li[i])==(retli[-1])[0]):
+            (retli[-1])[1]+=1
+        else:
+            retli.append([str(li[i]),1])
+    return(retli)
+
+def liDecompress(li):
+    retli = []
+    for subList in li:
+        retli+=([subList[0]]*subList[1])
+    return(typeToggle(retli))
+
+def toggle2dArray(arr2d):
+    '''
+    Toggles row major 2D array to column major and vice-versa
+    '''
+    return(np.array(arr2d).T.tolist())

@@ -3,6 +3,7 @@ from PIL import Image as im
 import cv2 as cv
 from constants import *
 import matplotlib.pyplot as plt
+from functions import *
 
 def arr2png(arr,name_=""):
     if("shapes" in str(type(arr))):
@@ -246,6 +247,55 @@ def free_surface_area(canvas):
     b=len(np.where(a=='1')[0])
     bl=len(np.where(a=='b')[0])
     return([b,bl,w])
+
+def free_surface_all(arr,pcent):
+    '''
+    Step - 1 -> Compress the given 2d list
+    Step - 2 -> if 0 count > given percentage, change 0 to *
+    Step - 3 -> Decompress and save as arr1
+
+    Step - 4 -> Invert Row and Column major
+    Step - 5 -> Repeat step 1 till 3 and jump to step 6
+    Step - 6 -> Invert Row and Column major and save as arr2
+
+    Step - 7 -> Replace all overlapping stuff by *
+    Step - 8 -> Change all * to b
+    '''
+    def step1to3(arr,pcent):
+        arrCompressed = []
+        for _ in arr:
+            arrCompressed.append(liCompress(_))
+        for a in range(len(arrCompressed)):
+            for tups in range(len(arrCompressed[a])):
+                if(arrCompressed[a][tups][0]=='0' and (arrCompressed[a][tups][1]/len(arr[0])*100)>=pcent):
+                    arrCompressed[a][tups][0]='*'
+        arrDecompessed = []
+        for _ in arrCompressed:
+            arrDecompessed.append(liDecompress(_))
+        return(arrDecompessed)
+    
+    def symbolAdd(a,b):
+        if(a == '*' or b == '*'):
+            return('*')
+        else:
+            if(str(a)==str(b)):
+                return(a)
+            else:
+                raise(Exception('Logic Error !!!!!!'))
+
+    arr1=step1to3(arr,pcent)
+
+    arr2=toggle2dArray(step1to3(toggle2dArray(arr),pcent))
+
+    arrFinal = np.empty([len(arr),len(arr[0])]).tolist()
+
+    for i,x in enumerate(arr):
+        for j,y in enumerate(x):
+            arrFinal[i][j] = symbolAdd(arr1[i][j],arr2[i][j])
+
+    arrFinal = np.array(arrFinal)
+    arrFinal = np.where(arrFinal=='*','b',arrFinal)
+    return(arrFinal.tolist())
 
 def pieChart(li):
     li[0],li[2] = li[2],li[0]
