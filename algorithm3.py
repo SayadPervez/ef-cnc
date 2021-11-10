@@ -35,7 +35,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                 #print("choice 2")
                 break
         if(isObjectPlaced==False):
-            if(shape.myShape!="circle"):
+            if(shape.myShape=="cone"):
                 shape.tilt(90)
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
@@ -54,7 +54,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                     #print("choice 1")
                     break
         if(isObjectPlaced==False):
-            if(shape.myShape!="circle"):
+            if(shape.myShape=="cone"):
                 shape.tilt(180)
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
@@ -73,7 +73,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                     #print("choice 3")
                     break
         if(isObjectPlaced==False):
-            if(shape.myShape!="circle"):
+            if(shape.myShape=="cone"):
                 shape.tilt(-90)
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
@@ -92,7 +92,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                     #print("choice 4")
                     break
         if(isObjectPlaced==False):
-            if(shape.myShape!="circle"):
+            if(shape.myShape=="cone"):
                 shape.tilt(180)
             sArray = shape.shapeMatrix
             sx,sy = np.shape(sArray)
