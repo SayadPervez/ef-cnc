@@ -21,8 +21,28 @@ arr2png(out).show()
 input("Press ENTER to continue ...")
 out = free_surface_12(out)
 arr2png(out).show()
-#input("Press ENTER to continue ...")
-#arr2png(free_surface_34(out)).show()
+input("Press ENTER to continue ...")
+pieChart(free_surface_area(out))
+
+input("Start next algorithm ?")
+
+print("\na2-S starting:")
+canvas = Canvas(108,72)
+shapes    = [ 
+            Square(20) ,
+            Rectangle(10,25) , 
+            Circle(7) ,
+            Cone(17,20) ,
+            Cone(12,4)
+        ]
+c = canvas
+li = shapes
+print("Starting algorithm1")
+out = algorithm2.run(c,li,log_=True,constCompute=50)
+arr2png(out).show()
+input("Press ENTER to continue ...")
+out = free_surface_12(out)
+arr2png(out).show()
 input("Press ENTER to continue ...")
 pieChart(free_surface_area(out))
 
@@ -45,4 +65,27 @@ print("Starting algorithm3")
 out = algorithm3.run(c,li,log_=True,constCompute=75)
 arr2png(out).show()
 input("Press ENTER to continue ...")
-arr2png(free_surface_12(out)).show()
+out = free_surface_12(out)
+arr2png(out).show()
+input("Press ENTER to continue ...")
+pieChart(free_surface_area(out))
+
+print("\na4-S starting:")
+canvas = Canvas(108,72)
+shapes    = [ 
+            Square(20) ,
+            Rectangle(10,25) , 
+            Circle(7) ,
+            Cone(17,20) ,
+            Cone(12,4)
+        ]
+c = canvas
+li = shapes
+print("Starting algorithm1")
+out = algorithm4.run(c,li,log_=True,constCompute=75)
+arr2png(out).show()
+input("Press ENTER to continue ...")
+out = free_surface_12(out)
+arr2png(out).show()
+input("Press ENTER to continue ...")
+pieChart(free_surface_area(out))
