@@ -99,7 +99,7 @@ def rotate(obj,angle):
         if(obj.myShape=="CANVAS"):
             raise Exception("CANVAS cannot be rotated")
     a=np.array(arr,dtype=str)
-    a[a=='1']='r'
+    a[a=='0.7']='r'
     l,b=np.shape(a)
     enlarge_factor = round((l**2+b**2)**0.5)*2
     r=np.zeros(  (  enlarge_factor  ,  enlarge_factor  )             ,dtype=str)
@@ -116,9 +116,10 @@ def rotate(obj,angle):
     right=max(res[0])
     left=min(res[0])
     rotated=r[left:right+1,top:bottom+1]
-    rotated[rotated=='r']=1.0
+    rotated[rotated=='r']=2
     rotated = np.array(rotated,dtype=float)
-    #rotated=arr2png(rotated,name_="")
+    rotated[rotated==2]=0.7
+    npAnalyse(rotated)
     return(rotated.tolist())
 
 def color(shape,color):
