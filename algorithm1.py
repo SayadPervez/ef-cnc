@@ -8,11 +8,11 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     elif(type(constCompute)==type(True) and constCompute==True):
         constCompute = 100
     else:
-        constCompute = 1
+        constCompute = False
     cArray = np.array(canvas.shapeMatrix,dtype=float) #cArray => canvasArray
     cx,cy = np.shape(cArray)
-    stepX = ceil(cx/constCompute)
-    stepY = ceil(cy/constCompute)
+    stepX = ceil(cx/constCompute) if constCompute else 1
+    stepY = ceil(cy/constCompute) if constCompute else 1
     memoryX = 0
     memoryY = 0
     if(col==False):

@@ -3,16 +3,9 @@ from visualization import *
 from functions import *
 import numpy as np
 
-'''
-spe = Cone(20,12)
+def binaryFilter(canvas):
+    a = np.array(canvas)
+    a[a==1]=1
+    a[a!=1]=0
+    return((np.array(a,int)).tolist())
 
-x = rotate(evenize(spe.shapeMatrix),70)
-
-arr2png(x).show()
-
-'''
-spe = Cone(20,12)
-
-x = rotate(evenize(outline_with_shape(spe.shapeMatrix,20)),70)
-
-arr2png(x).show()

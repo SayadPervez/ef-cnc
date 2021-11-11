@@ -185,3 +185,9 @@ def outlineBugFixFunction(li2d):
                 templi.append(col)
         retli.append(templi)
     return(retli)
+
+def binaryFilter(canvas):
+    a = np.array(canvas)
+    a[a==1]=1
+    a[a!=1]=0
+    return((np.array(a,int)).tolist())

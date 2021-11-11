@@ -119,7 +119,7 @@ def rotate(obj,angle):
     rotated[rotated=='r']=2
     rotated = np.array(rotated,dtype=float)
     rotated[rotated==2]=0.7
-    npAnalyse(rotated)
+    #npAnalyse(rotated)
     return(rotated.tolist())
 
 def color(shape,color):
@@ -243,7 +243,9 @@ def free_surface_34(canvas_array,konst):
 def free_surface_area(canvas):
     a=np.array(canvas,str)
     w=len(np.where(a=='0')[0])
+    w+=len(np.where(a=='0.0')[0])
     b=len(np.where(a=='1')[0])
+    b=len(np.where(a=='1.0')[0])
     bl=len(np.where(a=='b')[0])
     return([b,bl,w])
 
