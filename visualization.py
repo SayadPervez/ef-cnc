@@ -1,5 +1,6 @@
 import numpy as np  
 from PIL import Image as im
+import PIL
 import cv2 as cv
 from constants import *
 import matplotlib.pyplot as plt
@@ -139,7 +140,7 @@ def outline_with_shape(shapemat,thick):
     a=arr2png(shapemat)
     a.save("./IMG/a.png")
     x,y=a.size
-    b=a.resize((x+2*thick+2,y+2*thick+2))
+    b=a.resize((x+2*thick+2,y+2*thick+2),resample=PIL.Image.NEAREST)
     b.save("./IMG/b.png")
     a=png2arr("./IMG/a.png")
     b=png2arr("./IMG/b.png")

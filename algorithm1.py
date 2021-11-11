@@ -9,7 +9,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
         constCompute = 100
     else:
         constCompute = 1
-    cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
+    cArray = np.array(canvas.shapeMatrix,dtype=float) #cArray => canvasArray
     cx,cy = np.shape(cArray)
     stepX = ceil(cx/constCompute)
     stepY = ceil(cy/constCompute)
@@ -17,7 +17,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     memoryY = 0
     if(col==False):
         for shape in shapeList:
-            sArray = shape.shapeMatrix
+            sArray = np.array(shape.shapeMatrix,dtype=float)
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
             for row in range(0,cx-sx,stepX):
@@ -53,8 +53,6 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                     newCanvas = np.copy(cArray)
                     #print(row)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
-                    print("Error before here .Exiting now.")
-                    exit()
                     if(func.isInterfering(newCanvas)):
                         pass
                     else:
