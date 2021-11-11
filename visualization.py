@@ -165,7 +165,6 @@ def outline_with_shape(shapemat,thick):
                 e[i][j]=0.7
     return(e)
 
-
 def outline(shapemat,thick=0):
     r=outline_with_shape(shapemat,thick)
     r=np.array(r,dtype=str)
