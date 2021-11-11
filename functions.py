@@ -1,4 +1,5 @@
 import numpy as np
+import collections as c
 
 # pospl -> POSition Point Line
 def pospl(pt1,pt2,pt3):
@@ -134,9 +135,15 @@ def typeToggle(li):
     retli=[]
     for _ in li:
         try:
-            retli.append(int(_))
+            retli.append(float(_))
         except Exception as e:
             retli.append(_)
+    return(retli)
+
+def typeToggle2d(li):
+    retli=[]
+    for row in li:
+        retli.append(typeToggle(row))
     return(retli)
 
 def liCompress(li):
@@ -159,3 +166,22 @@ def toggle2dArray(arr2d):
     Toggles row major 2D array to column major and vice-versa
     '''
     return(np.array(arr2d).T.tolist())
+
+def npAnalyse(nparray):
+    print(c.Counter((nparray.reshape(-1)).tolist()))
+
+def liAnalyse(li):
+    nparray = np.array(li)
+    print(c.Counter((nparray.reshape(-1)).tolist()))
+
+def outlineBugFixFunction(li2d):
+    retli=[]
+    for row in li2d:
+        templi=[]
+        for col in row:
+            if(col==''):
+                templi.append('0.7')
+            else:
+                templi.append(col)
+        retli.append(templi)
+    return(retli)

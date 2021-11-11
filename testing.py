@@ -6,13 +6,16 @@ from visualization import *
 
 print("\na1-S starting:")
 canvas = Canvas(108,72)
-shapes    = [ 
+shapes = [ 
             Square(20) ,
             Rectangle(10,25) , 
             Circle(7) ,
             Cone(17,20) ,
             Cone(12,4)
         ]
+for shape in shapes:
+    shape.shapeMatrix = outline_with_shape(shape,3)
+
 c = canvas
 li = shapes
 print("Starting algorithm1")
@@ -23,7 +26,7 @@ out = free_surface_all(out,70)
 arr2png(out).show()
 input("Press ENTER to continue ...")
 pieChart(free_surface_area(out))
-
+exit()
 input("Start next algorithm ?")
 
 print("\na2-S starting:")

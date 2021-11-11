@@ -18,6 +18,13 @@ def arr2png(arr,name_=""):
     ar0[a=='0']=255
     ar1[a=='0']=255
     ar2[a=='0']=255
+    ar0[a=='0.0']=255
+    ar1[a=='0.0']=255
+    ar2[a=='0.0']=255
+    #black
+    ar0[a=='1.0']=0
+    ar1[a=='1.0']=0
+    ar2[a=='1.0']=0
     #red
     ar0[a=='r']=255
     #blue
@@ -154,16 +161,7 @@ def outline_with_shape(shapemat,thick):
     #arr2png(e).show()
     e[l=='1']='1'
     #arr2png(e).show()
-    e.tolist()
-    for i,x in enumerate(e):
-        for j,k in enumerate(x):
-            if k=='0':
-                e[i][j]=0
-            if k=='1':
-                e[i][j]=1
-            if k=='0.7':
-                e[i][j]=0.7
-    return(e)
+    return(typeToggle2d(outlineBugFixFunction(e.tolist())))
 
 def outline(shapemat,thick=0):
     r=outline_with_shape(shapemat,thick)

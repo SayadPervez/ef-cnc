@@ -53,6 +53,8 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                     newCanvas = np.copy(cArray)
                     #print(row)
                     newCanvas[row:row+sx,col:col+sy]+=sArray
+                    print("Error before here .Exiting now.")
+                    exit()
                     if(func.isInterfering(newCanvas)):
                         pass
                     else:
