@@ -36,14 +36,14 @@ def evenize(a2dlist):
         return(a2dlist)
     if(i%2!=0):
         # if number of rows (height) is not even
-        min_index = min([sum(_) for _ in a2dlist])
+        min_index = int(min([sum(_) for _ in a2dlist]))
         del(a2dlist[min_index])
         ret=a2dlist
     if(j%2!=0):
         # if number of cols (width) is not even
         a = a2dlist.copy()
         x = np.array(a).T.tolist()
-        min_index = min([sum(_) for _ in x])
+        min_index = int(min([sum(_) for _ in x]))
         del(x[min_index])
         ret = np.array(x).T.tolist()
     return(ret)

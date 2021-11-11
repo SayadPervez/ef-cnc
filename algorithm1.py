@@ -41,7 +41,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                 print(f"Completed placing {shape.myShape}")
     else:
         for shape in shapeList:
-            sArray = shape.shapeMatrix
+            sArray = np.array(shape.shapeMatrix,dtype=float)
             sx,sy = np.shape(sArray)
             newCanvas = np.copy(cArray)
             for col in range(0,cy-sy,stepY):

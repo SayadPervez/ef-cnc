@@ -3,7 +3,7 @@ import numpy as np
 from math import ceil
 
 def fitting(canvas,shapeList,log_=False,constCompute=False):
-    cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
+    cArray = np.array(canvas.shapeMatrix,dtype=float) #cArray => canvasArray
     cx,cy = np.shape(cArray)
     if(type(constCompute)==type(100)):
         pass
@@ -16,7 +16,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
     memoryX = 0
     memoryY = 0
     for shape in shapeList:
-        sArray = shape.shapeMatrix
+        sArray = np.array(shape.shapeMatrix,dtype=float)
         sx,sy = np.shape(sArray)
         newCanvas = np.copy(cArray)
         isObjectPlaced=False

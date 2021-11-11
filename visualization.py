@@ -99,25 +99,36 @@ def rotate(obj,angle):
             raise Exception("CANVAS cannot be rotated")
     arr = obj
     a=np.array(arr,dtype=str)
+    npAnalyse(a)
     a[a=='1']='r'
+    a[a=='1.0']='r'
+    a[a=='0.7']='g'
     l,b=np.shape(a)
     enlarge_factor = round((l**2+b**2)**0.5)*2
     r=np.zeros(  (  enlarge_factor  ,  enlarge_factor  )             ,dtype=str)
     r[(enlarge_factor//2)-(l//2):(enlarge_factor//2)+(l//2),(enlarge_factor//2)-(b//2):(enlarge_factor//2)+(b//2)]=a
-    r[r=='']='0'
+    r[r=='']='0.0'
     r=arr2png(r,name_="")
     r=r.rotate(angle)
     r.save('./IMG/rotate.png')
     r=png2arr('./IMG/rotate.png')
     r=np.array(r,dtype=str)
-    res=np.where(r=='r')
-    top=min(res[1])
-    bottom=max(res[1])
-    right=max(res[0])
-    left=min(res[0])
+    try:
+        res=np.where(r=='g')
+        top=min(res[1])
+        bottom=max(res[1])
+        right=max(res[0])
+        left=min(res[0])
+    except Exception as e:
+        res=np.where(r=='r')
+        top=min(res[1])
+        bottom=max(res[1])
+        right=max(res[0])
+        left=min(res[0])
     rotated=r[left:right+1,top:bottom+1]
-    rotated[rotated=='r']=1
-    rotated = np.array(rotated,dtype=int)
+    rotated[rotated=='r']=1.0
+    rotated[rotated=='g']=0.7
+    rotated = np.array(rotated,dtype=float)
     #rotated=arr2png(rotated,name_="")
     return(rotated.tolist())
 

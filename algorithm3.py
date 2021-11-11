@@ -3,7 +3,7 @@ from math import ceil
 import numpy as np
 
 def fitting(canvas,shapeList,log_=False,constCompute=False):
-    cArray = np.array(canvas.shapeMatrix) #cArray => canvasArray
+    cArray = np.array(canvas.shapeMatrix,dtype=float) #cArray => canvasArray
     cx,cy = np.shape(cArray)
     if(type(constCompute)==type(100)):
         pass
@@ -16,7 +16,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
     memoryX = 0
     memoryY = 0
     for shape in shapeList:
-        sArray = shape.shapeMatrix
+        sArray = np.array(shape.shapeMatrix,dtype=float)
         sx,sy = np.shape(sArray)
         newCanvas = np.copy(cArray)
         isObjectPlaced=False
@@ -37,7 +37,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
         if(isObjectPlaced==False):
             if(shape.myShape=="cone"):
                 shape.tilt(90)
-            sArray = shape.shapeMatrix
+            sArray = np.array(shape.shapeMatrix,dtype=float)
             sx,sy = np.shape(sArray)
             for row in range(0,cx-sx,stepX):
                 col=0
@@ -56,7 +56,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
         if(isObjectPlaced==False):
             if(shape.myShape=="cone"):
                 shape.tilt(180)
-            sArray = shape.shapeMatrix
+            sArray = np.array(shape.shapeMatrix,dtype=float)
             sx,sy = np.shape(sArray)
             for row in range(0,cx-sx,stepX):
                 col=cy-sy
@@ -75,7 +75,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
         if(isObjectPlaced==False):
             if(shape.myShape=="cone"):
                 shape.tilt(-90)
-            sArray = shape.shapeMatrix
+            sArray = np.array(shape.shapeMatrix,dtype=float)
             sx,sy = np.shape(sArray)
             for col in range(0,cy-sy,stepY):
                 row=cx-sx
@@ -94,7 +94,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
         if(isObjectPlaced==False):
             if(shape.myShape=="cone"):
                 shape.tilt(180)
-            sArray = shape.shapeMatrix
+            sArray = np.array(shape.shapeMatrix,dtype=float)
             sx,sy = np.shape(sArray)
             for col in range(0,cy-sy,stepY):
                 doublebreak=False
