@@ -18,6 +18,9 @@ class Square:
         self.triangleCompatible = 0
         self.__generateShapeMatrix__(side,angle)
 
+    def regenerateSelf(self):
+        self.__generateShapeMatrix__(self.length,self.angle)
+
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nSide Length \t: {self.length} mm\nShape Tilt \t: {self.angle} °\nshapeFrameDimension \t: {self.shapeFrameDimension}")
     
@@ -112,6 +115,9 @@ class Rectangle:
         self.surfaceArea = length*height
         self.triangleCompatible = 0
         self.__generateShapeMatrix__(length,height,angle)
+
+    def regenerateSelf(self):
+        self.__generateShapeMatrix__(self.length,self.height,self.angle)
 
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nSide Length \t: {self.length} mm\nSide Height \t: {self.height} mm\nShape Tilt \t: {self.angle} °\nshapeFrameDimension \t: {self.shapeFrameDimension}")
@@ -213,6 +219,9 @@ class Circle:
         self.surfaceArea = pi*radius*radius
         self.__generateShapeMatrix__(radius)
 
+    def regenerateSelf(self):
+        self.__generateShapeMatrix__(self.radius)
+
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.radius} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
     
@@ -282,6 +291,9 @@ class Cone:
         self.cone_type = 1 if self.theta<=180 else 2
         self.triangleCompatible = 3 if self.cone_type==1 else 2
         #print('Cone type : ',self.cone_type)
+        self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
+
+    def regenerateSelf(self):
         self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
 
     def __repr__(self):
@@ -391,6 +403,9 @@ class Canvas:
         self.height = height
         self.surfaceArea = length*height
         self.__generateShapeMatrix__(length,height)
+
+    def regenerateSelf(self):
+        self.__generateShapeMatrix__(self.length,self.height)
 
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nSide Length \t: {self.length} mm\nSide Height \t: {self.height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
