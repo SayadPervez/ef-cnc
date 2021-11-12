@@ -13,7 +13,7 @@ class Square:
         self.myShape="square"
         self.length = side
         self.surfaceArea = side*side
-        self.angle = angle
+        self.angle = 0
         self.cornerCompatible = 1
         self.triangleCompatible = 0
         self.__generateShapeMatrix__(side,angle)
@@ -31,44 +31,9 @@ class Square:
         print(repr(self))
 
     def tilt(self,angle):
-        '''
-        Tilts the shape to the given angle
-        '''
-        angle = radians(angle)
-        sinFactor = (sin(angle)*self.length)*const.sampl
-        cosFactor=(cos(angle)*self.length)*const.sampl
-        dy = ( sinFactor + cosFactor )
-        dx = dy
-        self.shapeFrameDimension = [ int(round(dx)) , int(round(dy)) ]
-        #print(self.shapeFrameDimension)
-        ###################################################################
-        point1 = [sinFactor,0]
-        point2 = [self.shapeFrameDimension[0],-1*sinFactor]
-        point3 = [cosFactor,-1*self.shapeFrameDimension[1]]
-        point4 = [0,-1*cosFactor]
-        #edge 1 -> point 4 through 1
-        newShapeFrameMatrix=[]
-        for i in range(self.shapeFrameDimension[0]):
-            temp = []
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
-                if(pospl(point4,point1,currentPoint)==1):
-                    temp.append(0)
-                else:
-                    temp.append(1)
-            newShapeFrameMatrix.append(temp)
-        #edge 2 -> point 1 through 2
-        for i in range(self.shapeFrameDimension[0]):
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
-                if(pospl(point1,point2,currentPoint)==1):
-                    newShapeFrameMatrix[i][j]=0
-                if(pospl(point2,point3,currentPoint)==1):
-                    newShapeFrameMatrix[i][j]=0
-                if(pospl(point3,point4,currentPoint)==1):
-                    newShapeFrameMatrix[i][j]=0
-
-        self.shapeMatrix = newShapeFrameMatrix
+        self.angle += angle
+        self.shapeMatrix=rotate(evenize(self.shapeMatrix),angle)
+        self.shapeFrameDimension = [len(self.shapeMatrix[0]),len(self.shapeMatrix)]
 
     def printShape(self):
         '''
@@ -94,10 +59,11 @@ class Square:
         Generates 2D binary shape matrix
         '''
         self.dimensions=[self.length*const.sampl,self.angle,'dm,°']     # only angle of dimension changes on tilting
+        siu = side*const.sampl # sim => side in micrometers (u kind of looks like Mu)
+        self.shapeMatrix = [[1]*siu]*siu
+        self.shapeFrameDimension = [siu,siu]       # shapeFrameDimension changes on tilting
         if(angle==0 or angle%90==0):
-            siu = side*const.sampl # sim => side in micrometers (u kind of looks like Mu)
-            self.shapeMatrix = [[1]*siu]*siu
-            self.shapeFrameDimension = [siu,siu]       # shapeFrameDimension changes on tilting
+            pass
         else:
             self.tilt(angle)
 
@@ -110,7 +76,7 @@ class Rectangle:
         self.myShape="rectangle"
         self.length = length
         self.height = height
-        self.angle = angle
+        self.angle = 0
         self.cornerCompatible = 1
         self.surfaceArea = length*height
         self.triangleCompatible = 0
@@ -129,47 +95,9 @@ class Rectangle:
         print(repr(self))
 
     def tilt(self,angle):
-        '''
-        Tilts the shape to the given angle
-        '''
-        angle = (radians(90)-radians(angle)) if (angle!=90) else radians(angle)
-        sinFactorHeight = (sin(angle)*self.height)*const.sampl
-        cosFactorHeight =(cos(angle)*self.height)*const.sampl
-        sinFactorLength = (sin(angle)*self.length)*const.sampl
-        cosFactorLength =(cos(angle)*self.length)*const.sampl
-        dy = (sinFactorLength + cosFactorHeight)
-        dx = (cosFactorLength + sinFactorHeight)
-        self.shapeFrameDimension = [ int(round(dx)) , int(round(dy)) ]
-        #print(self.shapeFrameDimension)
-        ###################################################################
-        
-        point1 = [cosFactorLength,0]
-        point2 = [self.shapeFrameDimension[0],-1*cosFactorHeight]
-        point3 = [sinFactorHeight,-1*self.shapeFrameDimension[1]]
-        point4 = [0,-1*sinFactorLength]
-        #edge 1 -> point 4 through 1
-        newShapeFrameMatrix=[]
-        for i in range(self.shapeFrameDimension[0]):
-            temp = []
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
-                if(pospl(point4,point1,currentPoint)==1):
-                    temp.append(0)
-                else:
-                    temp.append(1)
-            newShapeFrameMatrix.append(temp)
-        #edge 2 -> point 1 through 2
-        for i in range(self.shapeFrameDimension[0]):
-            for j in range(self.shapeFrameDimension[1]):
-                currentPoint = [i,-1*j]
-                if(pospl(point1,point2,currentPoint)==1):
-                    newShapeFrameMatrix[i][j]=0
-                if(pospl(point2,point3,currentPoint)==1):
-                    newShapeFrameMatrix[i][j]=0
-                if(pospl(point3,point4,currentPoint)==1):
-                    newShapeFrameMatrix[i][j]=0
-
-        self.shapeMatrix = newShapeFrameMatrix
+        self.angle += angle
+        self.shapeMatrix=rotate(evenize(self.shapeMatrix),angle)
+        self.shapeFrameDimension = [len(self.shapeMatrix[0]),len(self.shapeMatrix)]
 
     def printShape(self):
         '''
@@ -195,14 +123,13 @@ class Rectangle:
         Generates 2D binary shape matrix
         '''
         self.dimensions=[self.length*const.sampl,self.height*const.sampl,self.angle,'dm,dm,°']     # only angle of dimension changes on tilting
+        
+        liu = length*const.sampl # liu => length in micrometers (u kind of looks like Mu)
+        hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
+        self.shapeMatrix = [[1]*liu]*hiu
+        self.shapeFrameDimension = [liu,hiu]        # shapeFrameDimension changes on tilting
         if(angle==0 or angle%180==0):
-            liu = length*const.sampl # liu => length in micrometers (u kind of looks like Mu)
-            hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
-            self.shapeMatrix = [[1]*liu]*hiu
-            self.shapeFrameDimension = [liu,hiu]        # shapeFrameDimension changes on tilting
-        elif angle==90:
-            self.__generateShapeMatrix__(height,length,0)
-            self.angle=90
+            pass
         else:
             self.tilt(angle)
 
@@ -274,9 +201,10 @@ class Cone:
     '''
     Give cone-height & cone-radius in milli-meter( mm )
     '''
-    def __init__(self,cone_height,cone_radius):
+    def __init__(self,cone_height,cone_radius,angle=0):
         self.uid = ri(0,1000000000000000000000)
         self.myShape="cone"
+        self.angle = 0
         self.cone_radius = round(cone_radius)
         self.cone_height = round(cone_height)
         self.slantHeight = round((cone_radius**2 + cone_height**2)**0.5)
@@ -291,15 +219,16 @@ class Cone:
         self.cone_type = 1 if self.theta<=180 else 2
         self.triangleCompatible = 3 if self.cone_type==1 else 2
         #print('Cone type : ',self.cone_type)
-        self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
+        self.__generateShapeMatrix__(self.slantHeight,self.cone_type,angle)
 
     def regenerateSelf(self):
-        self.__generateShapeMatrix__(self.slantHeight,self.cone_type)
+        self.__generateShapeMatrix__(self.slantHeight,self.cone_type,self.angle)
 
     def __repr__(self):
         return(f"Object Shape \t: {self.myShape}\nShape Radius \t: {self.cone_radius} mm\nShape Height \t: {self.cone_height} mm\nshapeFrameDimension \t: {self.shapeFrameDimension}")
     
     def tilt(self,angle):
+        self.angle = angle
         self.shapeMatrix=rotate(evenize(self.shapeMatrix),angle)
         self.shapeFrameDimension = [len(self.shapeMatrix[0]),len(self.shapeMatrix)]
 
@@ -341,7 +270,7 @@ class Cone:
         else:
             return(False)
 
-    def __generateShapeMatrix__(self,radius,type):
+    def __generateShapeMatrix__(self,radius,type,angle):
         '''
         Generates 2D binary shape matrix
         '''
@@ -391,6 +320,8 @@ class Cone:
                         shapeSkeleton[i][j]=0
         self.dimensions=[self.cone_height*const.sampl,self.cone_radius*const.sampl,'dm,dm']     # only angle of dimension changes on tilting
         self.shapeMatrix = shapeSkeleton
+        if(angle!=0):
+            self.tilt(angle)
 
 class Canvas:
     '''

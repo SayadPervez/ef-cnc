@@ -3,7 +3,7 @@ from shapes import *
 import algorithm1,algorithm2,algorithm3,algorithm4
 import constants as const
 from visualization import *
-
+'''
 const.sampl=1
 
 print("\na1-S starting:")
@@ -36,3 +36,12 @@ shapes = [
             Cone(17,20) ,
             Cone(12,4)
         ]
+'''
+
+sq = Cone(50,20,20)
+#sq.shapeMatrix = outline_with_shape(sq,3)
+sq.displayShape()
+print(sq)
+sq.tilt(20)
+print(sq)
+sq.displayShape()

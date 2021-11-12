@@ -167,12 +167,18 @@ def toggle2dArray(arr2d):
     '''
     return(np.array(arr2d).T.tolist())
 
-def npAnalyse(nparray):
-    print(c.Counter((nparray.reshape(-1)).tolist()))
+def npAnalyse(nparray,display=True):
+    if(display):
+        print(c.Counter((nparray.reshape(-1)).tolist()))
+    else:
+        return(c.Counter((nparray.reshape(-1)).tolist()))
 
-def liAnalyse(li):
+def liAnalyse(li,display=True):
     nparray = np.array(li)
-    print(c.Counter((nparray.reshape(-1)).tolist()))
+    if(display):
+        print(c.Counter((nparray.reshape(-1)).tolist()))
+    else:
+        return(c.Counter((nparray.reshape(-1)).tolist()))
 
 def outlineBugFixFunction(li2d):
     retli=[]
