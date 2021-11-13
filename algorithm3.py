@@ -30,6 +30,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                 pass
             else:
                 isObjectPlaced=True
+                shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                 memoryX=row+(71/100*sx)
                 memoryY=col+(71/100*sy)
                 #print("choice 2")
@@ -49,6 +50,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                     pass
                 else:
                     isObjectPlaced=True
+                    shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                     memoryX=row+(71/100*sx)
                     memoryY=col+(71/100*sy)
                     #print("choice 1")
@@ -68,6 +70,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                     pass
                 else:
                     isObjectPlaced=True
+                    shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                     memoryX=row+(71/100*sx)
                     memoryY=col+(71/100*sy)
                     #print("choice 3")
@@ -87,6 +90,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                     pass
                 else:
                     isObjectPlaced=True
+                    shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                     memoryX=row+(71/100*sx)
                     memoryY=col+(71/100*sy)
                     #print("choice 4")
@@ -107,6 +111,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
                         pass
                     else:
                         doublebreak=True
+                        shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                         memoryX=row+(71/100*sx)
                         memoryY=col+(71/100*sy)
                         break
@@ -118,7 +123,7 @@ def fitting(canvas,shapeList,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,log_=False,constCompute=False):
+def run(canvas,shapeList,log_=False,constCompute=False,returnOrder=False):
     shapeList=func.triangleSort(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
@@ -140,4 +145,6 @@ def run(canvas,shapeList,log_=False,constCompute=False):
     ones = [1]*coneCount
     for q in range(coneCount):
         shapeList[q].flaTilt(ones[q])
+    if(returnOrder):
+        return(fitting(canvas,shapeList,log_,constCompute),shapeList)
     return(fitting(canvas,shapeList,log_,constCompute))
