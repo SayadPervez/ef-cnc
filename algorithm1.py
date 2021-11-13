@@ -70,7 +70,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=False,noSort=False):
+def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=False,memory_=False,noSort=False,returnOrder=False):
     if(noSort==False):
         if(timeComplexity==True or memory_==True):
             shapeList=func.sortSurfaceArea(shapeList)[::-1]
@@ -91,4 +91,6 @@ def run(canvas,shapeList,col=True,log_=False,timeComplexity=False,constCompute=F
     # If program passes till here,
     # All the given shapes can be theoretically arranged in the canvas. Practically, I doubt it
     #print(d)
+    if(returnOrder):
+        return(fitting(canvas,shapeList,col,log_,constCompute),shapeList)
     return(fitting(canvas,shapeList,col,log_,constCompute))

@@ -32,6 +32,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         isObjectPlaced=True
+                        shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                         memoryX=row+(71/100*sx)
                         memoryY=col+(71/100*sy)
                         #print("row changes")
@@ -47,6 +48,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                             pass
                         else:
                             isObjectPlaced=True
+                            shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                             memoryX=row+(71/100*sx)
                             memoryY=col+(71/100*sy)
                             #print("col changes")
@@ -63,6 +65,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                                 pass
                             else:
                                 doublebreak=True
+                                shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                                 memoryX=row+(71/100*sx)
                                 memoryY=col+(71/100*sy)
                                 break
@@ -80,6 +83,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                             pass
                         else:
                             doublebreak=True
+                            shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                             memoryX=row+(71/100*sx)
                             memoryY=col+(71/100*sy)
                             break
@@ -105,6 +109,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                         pass
                     else:
                         isObjectPlaced=True
+                        shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                         memoryX=row+(71/100*sx)
                         memoryY=col+(71/100*sy)
                         #print("row changes")
@@ -120,6 +125,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                             pass
                         else:
                             isObjectPlaced=True
+                            shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                             memoryX=row+(71/100*sx)
                             memoryY=col+(71/100*sy)
                             #print("col changes")
@@ -136,6 +142,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                                 pass
                             else:
                                 doublebreak=True
+                                shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                                 memoryX=row+(71/100*sx)
                                 memoryY=col+(71/100*sy)
                                 break
@@ -153,6 +160,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
                             pass
                         else:
                             doublebreak=True
+                            shape.low_res_pos = [round(row/cx*100,2),round(col/cy*100,2),0]
                             memoryX=row+(71/100*sx)
                             memoryY=col+(71/100*sy)
                             break
@@ -164,7 +172,7 @@ def fitting(canvas,shapeList,col=True,log_=False,constCompute=False):
     ret = cArray.tolist()
     return(ret)
 
-def run(canvas,shapeList,col=True,log_=False,constCompute=False):
+def run(canvas,shapeList,col=True,log_=False,constCompute=False,returnOrder=False):
     shapeList=func.sortEdgeCorners(shapeList)
     d,_=func.singleFit(canvas,shapeList)
     l1 = [d[_][0] for _ in d]
@@ -181,4 +189,6 @@ def run(canvas,shapeList,col=True,log_=False,constCompute=False):
     # If program passes till here,
     # All the given shapes can be theoretically arranged in the canvas. Practically, I doubt it
     #print(d)
+    if(returnOrder):
+        return(fitting(canvas,shapeList,col,log_,constCompute),shapeList)
     return(fitting(canvas,shapeList,col,log_,constCompute))
