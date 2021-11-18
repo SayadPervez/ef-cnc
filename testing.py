@@ -3,45 +3,34 @@ from shapes import *
 import algorithm1,algorithm2,algorithm3,algorithm4
 import constants as const
 from visualization import *
-'''
-const.sampl=1
+import ezdxf
+from ezdxf.addons.drawing import RenderContext, Frontend
+from ezdxf.addons.drawing.matplotlib import MatplotlibBackend
+import re
+import glob
 
-print("\na1-S starting:")
-canvas = Canvas(200,100)
-shapes = [ 
-            Square(20) ,
-            Rectangle(35,25) , 
-            Circle(7) ,
-            Cone(17,20) ,
-            Cone(12,4)
-        ]
+def dxf2arr( names, img_format='png', img_res=300):
+    for name in names:
+        doc = ezdxf.readfile(name)
+        msp = doc.modelspace()
+        # Recommended: audit & repair DXF document before rendering
+        auditor = doc.audit()
+        # The auditor.errors attribute stores severe errors,
+        # which *may* raise exceptions when rendering.
+        if len(auditor.errors) != 0:
+            raise Exception("The DXF document is damaged and can't be converted!")
+        else :
+            fig = plt.figure()
+            ax = fig.add_axes([0, 0, 1, 1])
+            ctx = RenderContext(doc)
+            ctx.set_current_layout(msp)
+            ctx.current_layout.set_colors(bg='#FFFFFF')
+            out = MatplotlibBackend(ax)
+            Frontend(ctx, out).draw_layout(msp, finalize=True)
 
-for shape in shapes:
-    shape.shapeMatrix = outline_with_shape(shape,3)
+            img_name = re.findall("(\S+)\.",name)  # select the image name that is the same as the dxf file name
+            first_param = ''.join(img_name) + img_format  #concatenate list and string
+            fig.savefig(first_param, dpi=img_res)
+            return png2arr(first_param)
 
-c = canvas
-li = shapes
-print("Starting algorithm1")
-out = binaryFilter(algorithm1.run(c,li,log_=True,constCompute=50))
-print("Lowlevel rendering completed")
-#arr2png(out).show()
-
-const.sampl=10
-
-canvas = Canvas(200,100)
-shapes = [ 
-            Square(20) ,
-            Rectangle(35,25) , 
-            Circle(7) ,
-            Cone(17,20) ,
-            Cone(12,4)
-        ]
-'''
-
-sq = Cone(50,20,20)
-#sq.shapeMatrix = outline_with_shape(sq,3)
-sq.displayShape()
-print(sq)
-sq.tilt(20)
-print(sq)
-sq.displayShape()
+arr2png(dxf2arr(['./IMG/c100.dxf'])).show()
