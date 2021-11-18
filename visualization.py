@@ -5,6 +5,8 @@ import cv2 as cv
 from constants import *
 import matplotlib.pyplot as plt
 from functions import *
+from ezdxf import recover
+from ezdxf.addons.drawing import matplotlib
 
 def arr2png(arr,name_=""):
     if("shapes" in str(type(arr))):
@@ -331,3 +333,18 @@ def pieChart(li):
     plt.pie(li, labels = mylabels, explode = myexplode, colors=mycolors,startangle = 210,autopct='%1.0f%%')
     plt.title("Canvas Efficiency Chart")
     plt.show() 
+
+def invertColor(imgarray):
+    x = np.array(imgarray,dtype=str)
+    x[x=='0']=1
+    x[x=='m']=1
+    x[x=='']=0
+    return(typeToggle2d(x.tolist()))
+
+def dxf2arr(dxffile):
+    doc, auditor = recover.readfile(dxffile)
+    if not auditor.has_errors:
+        matplotlib.qsave(doc.modelspace(), './IMG/img.png')
+        return(invertColor(png2arr("./IMG/img.png")))
+    else:
+        raise Exception("Corrupted DXF file")
