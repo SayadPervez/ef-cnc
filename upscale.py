@@ -5,7 +5,7 @@ import constants as const
 from visualization import *
 import math
 
-def upscale(canvas,shapes,alg=1,scaleFactor=[3,10],constCompute=75,display=False,thickness=1):
+def upscale(canvas,shapes,alg=1,scaleFactor=[2,5],constCompute=75,display=False,thickness=1):
 
     # # Low Resolution Computing :
     # ### Sampling level set to 1
@@ -71,13 +71,13 @@ def upscale(canvas,shapes,alg=1,scaleFactor=[3,10],constCompute=75,display=False
     return(out)
 
 
-canvas = Canvas(200,100)
+canvas = Canvas(2000,1500)
 shapes = [ 
-            Square(20) ,
-            Rectangle(35,25) , 
-            Circle(7) ,
-            Cone(17,20) ,
-            Cone(12,4),
+            Square(200) ,
+            Rectangle(350,250) , 
+            Circle(70) ,
+            Cone(170,200) ,
+            Cone(120,40),
             Square(3)
         ]
-upscale(canvas,shapes,display=True,alg=2,scaleFactor=[3,20])
+upscale(canvas,shapes,display=True,alg=4,thickness=2)

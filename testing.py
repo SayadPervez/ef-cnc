@@ -6,12 +6,6 @@ from visualization import *
 from ezdxf import recover
 from ezdxf.addons.drawing import matplotlib
 
-def invertColor(imgarray):
-    x = np.array(imgarray,dtype=str)
-    x[x=='0']=1
-    x[x=='m']=1
-    x[x=='']=0
-    return(typeToggle2d(x.tolist()))
 
 
 
