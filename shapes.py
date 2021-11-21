@@ -1,7 +1,7 @@
 from functions import *
 import constants as const
 from math import sin,cos,radians,pi
-from visualization import arr2png,rotate
+from visualization import arr2png, png2arr,rotate
 from random import randint as ri
 
 class Square:
@@ -375,3 +375,62 @@ class Canvas:
         hiu = height*const.sampl # hiu => height in micrometers (u kind of looks like Mu)
         self.shapeMatrix = [[0]*liu]*hiu
         self.shapeFrameDimension = [liu,hiu]        # shapeFrameDimension changes on tilting
+
+class customShape:
+    '''
+    Give side in milli-meter( mm ) and angle in degrees( ° )
+    '''
+    def __init__(self,filepath,shapename,angle=0,cornerCompatible=1,triangleCompatible=0):
+        self.uid = ri(0,1000000000000000000000)
+        self.myShape=shapename
+        self.angle = 0
+        self.cornerCompatible = cornerCompatible
+        self.triangleCompatible = triangleCompatible
+        self.__generateShapeMatrix__(filepath,angle)
+
+    def regenerateSelf(self):
+        self.__generateShapeMatrix__(self.length,self.angle)
+
+    def __repr__(self):
+        return(f"Object Shape \t: {self.myShape}\nShape Tilt \t: {self.angle} °\nshapeFrameDimension \t: {self.shapeFrameDimension}")
+    
+    def print(self):
+        '''
+        Prints Object parameters to console
+        '''
+        print(repr(self))
+
+    def tilt(self,angle):
+        self.angle += angle
+        self.shapeMatrix=rotate(evenize(self.shapeMatrix),angle)
+        self.shapeFrameDimension = [len(self.shapeMatrix[0]),len(self.shapeMatrix)]
+
+    def printShape(self):
+        '''
+        Prints shape to console in binary 
+
+        #### Warning : CPU intensive task
+        '''
+        temp = ""
+        for li in self.shapeMatrix:
+            for num in li:
+                temp+=str(num)
+            temp+="\n"
+        print(temp)
+
+    def displayShape(self):
+        '''
+        Displays shape as a image
+        '''
+        (arr2png(self.shapeMatrix)).show()
+    
+    def __generateShapeMatrix__(self,filepath,angle=0):
+        '''
+        Generates 2D binary shape matrix
+        '''
+        self.shapeMatrix = imgTrim(png2arr(filepath))
+        arr2png(self.shapeMatrix,filepath.replace(".png",""))
+        if(angle==0 or angle%360==0):
+            pass
+        else:
+            self.tilt(angle)
