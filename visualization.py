@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from functions import *
 from ezdxf import recover
 from ezdxf.addons.drawing import matplotlib
+import os
 
 def arr2png(arr,name_=""):
     if("shapes" in str(type(arr))):
@@ -52,8 +53,10 @@ def arr2png(arr,name_=""):
         img.save(str(name_)+".png")
     return(img)
 
-def png2arr(img_path):
+def png2arr(img_path,low_quality=sampl):
     img = im.open(img_path)
+    l,b=img.size
+    img.resize((l//(sampl/low_quality),b//(sampl/low_quality)))
     ar=np.array(img,dtype='int64')
     s=np.shape(ar)
     a=np.zeros((s[0],s[1]),dtype=str)
@@ -198,7 +201,7 @@ def outline(shapemat,thick=0):
     r[r=='1']='0'
     r[r=='0.7']='1'
     #arr2png(r).show()
-    r.tolist()
+    r=r.tolist()
     for i,x in enumerate(r):
         for j,k in enumerate(x):
             if k=='0':
@@ -209,63 +212,6 @@ def outline(shapemat,thick=0):
                 r[i][j]=0.7
     return(r)
 
-def free_surface_12(canvas_array):
-    a=np.array(canvas_array,dtype=int)
-    a1=np.array(canvas_array,dtype=str)
-    l,b=np.shape(a)
-    a_v=sum(a)
-    a_h=sum(np.transpose(a))
-    res1=np.where(a_v==0)
-    res2=np.where(a_h==0)
-    l1=np.array(np.where(a_h<(np.max(a_h)*50//100 )),dtype=int)
-    b1=np.array(np.where(a_v<(np.max(a_v)*20//100)), dtype=int)
-    l1.tolist()
-    b1.tolist()
-    top=l1[0][len(l1[0])*7//100]       
-    bottom=l1[0][len(l1[0])-len(l1[0])*13//100-1] 
-    left=b1[0][len(b1[0])*13//100] 
-    right=b1[0][len(b1[0])-len(b1[0])*13//100-1]  
-    a1[top:bottom+1,left:right+1]='b'
-    
-    return(a1)
-
-def free_surface_34(canvas_array,konst):
-    p=q=r=e=konst
-    a=np.array(canvas_array,dtype=int)
-    a1=np.array(canvas_array,dtype=str)
-    k,o=np.shape(a)
-    a_v=sum(a)
-    a_h=sum(np.transpose(a))
-    res1=np.where(a_v==0)
-    res2=np.where(a_h==0)
-    a1[:,res1]='b'
-    a1[res2,:]='b'
-    v=[5,10,20,30,40,50,60,70,80,90,100]
-    s=np.zeros((101,101),int)
-    for i in v:
-        for j in v: 
-            l1=np.array(np.where(a_h<(np.max(a_h)*i//100 )),dtype=int)
-            b1=np.array(np.where(a_v<(np.max(a_v)*j//100)), dtype=int)
-            l1.tolist()
-            b1.tolist()
-            if l1!=[]:
-                top=l1[0][len(l1[0])*p//100]       
-                bottom=l1[0][len(l1[0])-len(l1[0])*q//100-1] 
-                left=b1[0][len(b1[0])*r//100]
-                right=b1[0][len(b1[0])-len(b1[0])*e//100-1]  
-                if np.sum(a[top:bottom+1,left:right+1])==0:
-                    l,b=np.shape(a[top:bottom+1,left:right+1])
-                    s[i][j]=l*b
-    
-    i,j=np.where(s==np.max(s))
-    l1=np.array(np.where(a_h<(np.max(a_h)*i[0]//100 )),dtype=int)
-    b1=np.array(np.where(a_v<(np.max(a_v)*j[0]//100)), dtype=int)
-    top=l1[0][len(l1[0])*p//100]
-    bottom=l1[0][len(l1[0])-len(l1[0])*q//100-1]
-    left=b1[0][len(b1[0])*r//100]
-    right=b1[0][len(b1[0])-len(b1[0])*e//100-1]
-    a1[top:bottom+1,left:right+1]='b'
-    return(a1)
 
 def free_surface_area(canvas):
     a=np.array(canvas,str)
@@ -348,3 +294,13 @@ def dxf2arr(dxffile):
         return(invertColor(png2arr("./IMG/img.png")))
     else:
         raise Exception("Corrupted DXF file")
+
+def arr2dxf(arr,name="img",arrRes=sampl):
+    img=arr2png(arr)
+    l,b=img.size
+    img=img.resize((l//round(arrRes/2.5),b//round(arrRes/2.5)),resample=PIL.Image.NEAREST)
+    img=np.array(img)[:,:,0]
+    im.fromarray(img).save(name+".bmp")
+    bmpname =  name + ".bmp"
+    dxfname =  name + ".dxf"
+    os.system("potrace -b dxf -o %s %s" % (dxfname, bmpname))
