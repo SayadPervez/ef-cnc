@@ -99,10 +99,8 @@ def extract(file):
             k=j
     return data[s:k+1]
 
-def canvas_extract(file):
+def canvas_extract(data):
     k=0; 
-    with open(file, "r") as file:
-        data = file.readlines()
     for j,line in enumerate(data):
         if(line.split()[0]=='</g>'):
             k=j
@@ -111,21 +109,21 @@ def canvas_extract(file):
 def placeSVG(canvas,objectSVG,x,y):
     x=mm2pt(x)
     y=mm2pt(y)
+    with open(canvas,"r") as a:
+        can=a.readlines()
     if type(objectSVG)==type([]):
         objectSVG=objectSVG
     else:
         objectSVG=[objectSVG]
     for i,shapes in enumerate(objectSVG):
         s=extract(shapes)
-        with open(canvas,"r") as a:
-            can=a.readlines()
-        k=canvas_extract(canvas)
+        k=canvas_extract(can)
         s.insert(0,'<g id="id'+"-"+ str(i)+'"' + ' transform="translate('+str(x)+','+str(y)+')"\n' )
         s.insert(len(s)-1,'</g>\n')
         can[k:k]=s
-        #Creating new svg file
-        c=open('Canvas.svg','a') 
-        c.writelines(can)
+    #Creating new svg file
+    c=open('Canvas.svg','w+') 
+    c.writelines(can)
 
 
 
