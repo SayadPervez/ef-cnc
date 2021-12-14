@@ -118,11 +118,10 @@ def placeSVG(canvas,objectSVG,x,y):
     for i,shapes in enumerate(objectSVG):
         s=extract(shapes)
         k=canvas_extract(can)
-        s.insert(0,'<g id="id'+"-"+ str(i)+'"' + ' transform="translate('+str(x)+','+str(y)+')"\n' )
-        s.insert(len(s)-1,'</g>\n')
+        s=s[1:len(s)-1]
+        s.insert(0,'<g id="id'+"-"+ str(i)+'"' + ' transform="translate('+str(x)+','+str(y)+')">\n' )
         can[k:k]=s
-    #Creating new svg file
-    c=open('Canvas.svg','w+') 
+    c=open(canvas,'w') 
     c.writelines(can)
 
 
