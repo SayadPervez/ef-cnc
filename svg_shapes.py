@@ -1,6 +1,6 @@
 import os
 import cairo
-from numpy import pi, sqrt
+from numpy import pi, sqrt,cos,sin
 from numpy.core.arrayprint import _object_format
 
 def svgResize2Drawing(path):
@@ -81,6 +81,70 @@ def Cone(radius,height,angle=0,name="Cone"):
         cr.fill()
         svgRotate(filename,angle,outputFileName=name)
         svgResize2Drawing(filename)
+def sector(radius,sector_angle,angle=0,name="Sector"):
+    filename=name+".svg"
+    l=mm2pt(radius)
+    sector_angle=sector_angle*pi/180
+    with cairo.SVGSurface(filename,2.5*l,2.5*l) as surface:
+        cr = cairo.Context(surface)
+        cr.move_to(l+2,l+2)
+        cr.arc(l+2,l+2,l,0,sector_angle)
+        cr.close_path()
+        cr.fill()
+        svgRotate(filename,angle,outputFileName=name)
+        svgResize2Drawing(filename)
+
+def frustum(R,r,h,angle=0,name="Frustum"):
+    filename=name+".svg"
+    R=mm2pt(R)
+    r=mm2pt(r)
+    h=mm2pt(h)
+    t=sqrt(h**2 + (R-r)**2)
+    L=t*R/(R-r)
+    theta=(R/L)*(2*pi)
+    l=L-t
+    with cairo.SVGSurface(filename,2.5*L,2.5*L) as surface:
+        cr = cairo.Context(surface)
+        X1,Y1=xy(L,0)
+        X2,Y2=xy(L,theta/2)
+        X3,Y3=xy(L,theta)
+        x1,y1=xy(l,0)
+        x2,y2=xy(l,theta/2)
+        x3,y3=xy(l,theta)
+        cr.curve_to(X1+L,Y1+L,X2+L,Y2+L,X3+L,Y3+L)
+        cr.line_to(x3+L,y3+L)
+        cr.curve_to(x3+L,y3+L,x2+L,y2+L,x1+L,y1+L)
+        cr.line_to(X1+L,Y1+L)
+        cr.fill()
+        svgRotate(filename,angle,outputFileName=name)
+        svgResize2Drawing(filename)
+
+def xy(r,theta):
+    x=r*cos(theta)
+    y=r*sin(theta)
+    return x,y
+
+def segment(R,r,segment_angle,angle=0,name="Segment"):
+    filename=name+".svg"
+    R=mm2pt(R)
+    r=mm2pt(r)
+    theta=segment_angle*pi/180
+    with cairo.SVGSurface(filename,2.5*R,2.5*R) as surface:
+        cr = cairo.Context(surface)
+        X1,Y1=xy(R,0)
+        X2,Y2=xy(R,theta/2)
+        X3,Y3=xy(R,theta)
+        x1,y1=xy(r,0)
+        x2,y2=xy(r,theta/2)
+        x3,y3=xy(r,theta)
+        cr.curve_to(X1+R,Y1+R,X2+R,Y2+R,X3+R,Y3+R)
+        cr.line_to(x3+R,y3+R)
+        cr.curve_to(x3+R,y3+R,x2+R,y2+R,x1+R,y1+R)
+        cr.line_to(X1+R,Y1+R)
+        cr.fill()
+        svgRotate(filename,angle,outputFileName=name)
+        svgResize2Drawing(filename)
+
 
 def mm2pt(x):
     return x*2.83465
