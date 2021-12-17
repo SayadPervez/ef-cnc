@@ -149,6 +149,10 @@ def segment(R,r,segment_angle,angle=0,name="Segment"):
 def mm2pt(x):
     return x*2.83465
 
+def svg2dxf(source,destinationPath):
+    os.system("inkscape --export-filename="+str(source) + " " +str(destinationPath))
+
+
 def extract(file):
     s=0; 
     k=0; 
