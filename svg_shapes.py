@@ -105,46 +105,45 @@ def frustum(R,r,h,angle=0,name="Frustum"):
     l=L-t
     with cairo.SVGSurface(filename,2.5*L,2.5*L) as surface:
         cr = cairo.Context(surface)
-        X1,Y1=xy(L,0)
-        X2,Y2=xy(L,theta/2)
-        X3,Y3=xy(L,theta)
-        x1,y1=xy(l,0)
-        x2,y2=xy(l,theta/2)
-        x3,y3=xy(l,theta)
-        cr.curve_to(X1+L,Y1+L,X2+L,Y2+L,X3+L,Y3+L)
-        cr.line_to(x3+L,y3+L)
-        cr.curve_to(x3+L,y3+L,x2+L,y2+L,x1+L,y1+L)
-        cr.line_to(X1+L,Y1+L)
+        X1,Y1=xy(L,0,L,L)
+        X2,Y2=xy(L,theta,L,L)
+        x2,y2=xy(l,theta,L,L)
+        x1,y1=xy(l,0,L,L)
+        cr.arc(L,L,L,0,theta)
+        cr.line_to(x2,y2)
+        cr.arc_negative(L,L,l,theta,0)
+        cr.line_to(X1,Y1)
+        cr.set_line_width(0.2)
+        cr.stroke_preserve()
         cr.fill()
         svgRotate(filename,angle,outputFileName=name)
         svgResize2Drawing(filename)
 
-def xy(r,theta):
-    x=r*cos(theta)
-    y=r*sin(theta)
-    return x,y
+def xy(r,theta,centre_x,centre_y):
+      X=centre_x + r* cos(theta)
+      Y=centre_y + r*sin(theta)
+      return X,Y
 
-def segment(R,r,segment_angle,angle=0,name="Segment"):
+def segment(R,r,segment_angle,angle=0,name="segment"):
     filename=name+".svg"
     R=mm2pt(R)
     r=mm2pt(r)
     theta=segment_angle*pi/180
     with cairo.SVGSurface(filename,2.5*R,2.5*R) as surface:
         cr = cairo.Context(surface)
-        X1,Y1=xy(R,0)
-        X2,Y2=xy(R,theta/2)
-        X3,Y3=xy(R,theta)
-        x1,y1=xy(r,0)
-        x2,y2=xy(r,theta/2)
-        x3,y3=xy(r,theta)
-        cr.curve_to(X1+R,Y1+R,X2+R,Y2+R,X3+R,Y3+R)
-        cr.line_to(x3+R,y3+R)
-        cr.curve_to(x3+R,y3+R,x2+R,y2+R,x1+R,y1+R)
-        cr.line_to(X1+R,Y1+R)
+        X1,Y1=xy(R,0,R,R)
+        X2,Y2=xy(R,theta,R,R)
+        x2,y2=xy(r,theta,R,R)
+        x1,y1=xy(r,0,R,R)
+        cr.arc(R,R,R,0,theta)
+        cr.line_to(x2,y2)
+        cr.arc_negative(R,R,r,theta,0)
+        cr.line_to(X1,Y1)
+        cr.set_line_width(0.2)
+        cr.stroke_preserve()
         cr.fill()
         svgRotate(filename,angle,outputFileName=name)
         svgResize2Drawing(filename)
-
 
 def mm2pt(x):
     return x*2.83465
